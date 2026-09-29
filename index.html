@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>VPN Sources Appendix</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">VPN Sources Appendix</h1>
+</header>
+<h1
+id="приложение.-проверка-доверия-к-vpn-источникам-и-сервисам">Приложение.
+Проверка доверия к VPN-источникам и сервисам</h1>
+<p><strong>Назначение.</strong> Этот раздел — методическая «подушка
+безопасности» к инструкции по доступу к зарубежным нейросетям. Он
+отвечает на три вопроса: <strong>кому верить</strong> среди рейтингов
+VPN, <strong>какие сервисы</strong> реально проверяемы и <strong>какие
+технические ловушки</strong> ломают анонимность даже при правильном
+выборе. Данные актуальны на <strong>29 сентября 2026</strong>.</p>
+<p><strong>Что нового в этой редакции</strong> (по итогам добивки
+первоисточников прямыми краулами):</p>
+<ul>
+<li>Полностью дочитаны «скрытые» части разборов: Habr 1033400, Habr
+1056290, gist BoberSdoh, «Вёрстка», исследование RKS Global по
+бесплатным VPN, отчёт OONI (EN).</li>
+<li>Добавлена карта конфликтов интересов <strong>рейтинговых
+сайтов</strong> (не только VPN-брендов): выяснилось, что
+<strong>Comparitech, ProPrivacy и BestVPN.com принадлежат
+Aura/Pango</strong> — той же группе, что владеет 14 VPN<a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>.</li>
+<li>Уточнён блок про <strong>Ziff Davis</strong>
+(IPVanish/StrongVPN/Encrypt.me/Perimeter 81 + PCMag/Mashable/IGN/Ookla)
+с юридическими реквизитами и тикером<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li>Зафиксирован новый сюжет <strong>«домены-двойники»</strong>: вокруг
+«Медузы» работают минимум <strong>пять</strong> независимых
+«Meduza/Medusa VPN»-сайтов —
+<code>meduzavpn.com</code>/<code>meduzacore.com</code>,
+<code>medusanet.org</code>, <code>mediavpn.net</code>,
+<code>meduzafast.space</code><a href="#fn3" class="footnote-ref"
+id="fnref3" role="doc-noteref"><sup>3</sup></a><a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a><a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>, а сам медиа-бренд «Медуза»
+публикует <strong>открытые критерии</strong>, по которым берёт VPN в
+рекламу<a href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a>.</li>
+<li><strong>Закрыто прямыми краулами:</strong> AV-Comparatives 2020
+подтверждает <strong>Trust.Zone VPN 1.1 (Trusted Solutions Ltd.,
+Seychelles)</strong> в списке 35 продуктов<a href="#fn7"
+class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>;
+актуальный TOS Trust.Zone называет оператором <strong>Internet Privacy
+Ltd</strong> (Сейшелы) с платёжным дистрибьютором <strong>Tersys Group
+OÜ</strong> (Таллин)<a href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a>; vpnscorecard даёт Trust.Zone
+<strong>61/100</strong> (Transparency 0)<a href="#fn9"
+class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a>.</li>
+<li><strong>Идентифицирован владелец MeduzaVPN</strong> — холдинг
+<strong>Anton Pankratov’s Companies</strong><a href="#fn10"
+class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>;
+добавлен пятый домен-двойник
+<strong><code>meduzafast.space</code></strong><a href="#fn11"
+class="footnote-ref" id="fnref11"
+role="doc-noteref"><sup>11</sup></a>.</li>
+<li><strong>Red Shield:</strong> зафиксировано публичное
+<strong>намерение</strong> судиться с РКН и дойти до ЕСПЧ (сентябрь
+2021)<a href="#fn12" class="footnote-ref" id="fnref12"
+role="doc-noteref"><sup>12</sup></a> — сам факт подачи иска не
+найден.</li>
+<li>Честно пересмотрен статус «неподтверждённого»: часть пунктов
+закрыта, часть — уточнена (см. §9).</li>
+</ul>
+<hr />
+<h2 id="главный-принцип">1. Главный принцип</h2>
+<blockquote>
+<p><strong>Если рейтинг зарабатывает на переходах в VPN или продаёт VPN
+сам — это не тест, а витрина.</strong></p>
+</blockquote>
+<p>Ни один «Топ-10 VPN» в рунете не является независимым техническим
+тестом. Причина — экономика: рейтинговые сайты монетизируются
+партнёрскими ссылками, а часть вертикально интегрирована с продавцами.
+Отдельная проверка 2026 года прямо фиксирует: <strong>«ни один
+коммерческий обзорный сайт не заработал нашего ярлыка
+„независимый“»</strong><a href="#fn13" class="footnote-ref" id="fnref13"
+role="doc-noteref"><sup>13</sup></a>. Единственные источники, которые
+можно использовать без поправки на коммерческий интерес, — это
+<strong>измерения</strong> (OONI), <strong>нонпрофитные
+комьюнити</strong> (Privacy Guides) и <strong>разборы с открытой
+методологией и воспроизводимыми данными</strong>.</p>
+<hr />
+<h2 id="карта-доверия-к-источникам">2. Карта доверия к источникам</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Источник</th>
+<th>Кто владеет / кто стоит за ним</th>
+<th>Монетизация</th>
+<th>Конфликт интересов</th>
+<th>Методология</th>
+<th>Вердикт</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>vpnlove.org</strong></td>
+<td><strong>RKS Global</strong> (проект Роскомсвободы)<a href="#fn14"
+class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a><a
+href="#fn15" class="footnote-ref" id="fnref15"
+role="doc-noteref"><sup>15</sup></a></td>
+<td>Продажи «через VPNPay» + <strong>собственный RKS VPN в «Топ
+редакции»</strong><a href="#fn16" class="footnote-ref" id="fnref16"
+role="doc-noteref"><sup>16</sup></a></td>
+<td>🔴 Крупный: продвигает свой сервис; в исследовании
+<code>rks.global</code> рекомендует vpnlove.org как «авторитетное
+экспертное сообщество», не раскрывая владельца<a href="#fn17"
+class="footnote-ref" id="fnref17"
+role="doc-noteref"><sup>17</sup></a></td>
+<td>🔴 <code>/methodology/</code> → <code>AccessDenied</code> (приватный
+GCS-bucket), <code>/about/</code> → битые картинки<a href="#fn18"
+class="footnote-ref" id="fnref18"
+role="doc-noteref"><sup>18</sup></a></td>
+<td><strong>Низкое</strong> как к рейтингу. Годится как источник по
+блокировкам</td>
+</tr>
+<tr class="even">
+<td><strong>vpnlove.me</strong></td>
+<td>Отдельный коммерческий обзорник (≠ vpnlove.org)</td>
+<td>Чистый <strong>affiliate</strong>: <code>go-nordvpn</code>,
+<code>go-surfsharkvpn</code>, <code>go-veepn</code>,
+<code>go-hidemynamevpn</code>, <code>go-cyberghostvpn</code>,
+<code>go-privateinternetaccess</code><a href="#fn19"
+class="footnote-ref" id="fnref19"
+role="doc-noteref"><sup>19</sup></a></td>
+<td>🔴 Явный: заявляет «unbiased», доход — с переходов</td>
+<td>🔴 «Best VPNs»-таблица без raw-данных</td>
+<td><strong>Низкое</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>trusted.vpnguild.org</strong></td>
+<td>Нонпрофит-<strong>ассоциация VPN-провайдеров</strong> (сами
+продавцы)<a href="#fn20" class="footnote-ref" id="fnref20"
+role="doc-noteref"><sup>20</sup></a><a href="#fn21" class="footnote-ref"
+id="fnref21" role="doc-noteref"><sup>21</sup></a></td>
+<td>Членство + форма «Apply to add your VPN»<a href="#fn22"
+class="footnote-ref" id="fnref22"
+role="doc-noteref"><sup>22</sup></a></td>
+<td>🟡 Умеренный: судят конкурентов</td>
+<td>🟡 Открыта, но: <em>«We do not conduct a technical audit, but
+provide an expert opinion»</em>; <em>«We do not publish
+advertising»</em><a href="#fn23" class="footnote-ref" id="fnref23"
+role="doc-noteref"><sup>23</sup></a></td>
+<td><strong>Среднее.</strong> Полезный фильтр «из РФ-корней», но это
+экспертиза, не тест</td>
+</tr>
+<tr class="even">
+<td><strong>OONI (+ RKS Global как соавтор)</strong></td>
+<td>OONI — независимая НКО, open-source<a href="#fn24"
+class="footnote-ref" id="fnref24"
+role="doc-noteref"><sup>24</sup></a></td>
+<td>Гранты<a href="#fn25" class="footnote-ref" id="fnref25"
+role="doc-noteref"><sup>25</sup></a></td>
+<td>🟢 Нет</td>
+<td>🟢 Web Connectivity + OSINT + интервью, данные воспроизводимы<a
+href="#fn26" class="footnote-ref" id="fnref26"
+role="doc-noteref"><sup>26</sup></a></td>
+<td><strong>Высокое.</strong> Эталон по блокировкам</td>
+</tr>
+<tr class="odd">
+<td><strong>privacyguides.org</strong></td>
+<td>Нонпрофит 501(c)(3), волонтёры + штат<a href="#fn27"
+class="footnote-ref" id="fnref27"
+role="doc-noteref"><sup>27</sup></a></td>
+<td>Донаты/членские</td>
+<td>🟢 <strong>Нет affiliate-ссылок</strong>, рекомендации проверяются
+несколькими мейнтейнерами<a href="#fn28" class="footnote-ref"
+id="fnref28" role="doc-noteref"><sup>28</sup></a></td>
+<td>🟢 Открытые критерии</td>
+<td><strong>Высокое.</strong> Эталон</td>
+</tr>
+<tr class="even">
+<td><strong>vpnscorecard.com</strong></td>
+<td>Независимый<a href="#fn29" class="footnote-ref" id="fnref29"
+role="doc-noteref"><sup>29</sup></a></td>
+<td>Нет affiliate</td>
+<td>🟢 Нет, <strong>сам фиксирует расхождения источников и уровень
+confidence</strong></td>
+<td>🟢 Score-модель (Privacy/Security/Transparency/Ethics)</td>
+<td><strong>Высокое</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>changeok.io</strong></td>
+<td>Независимый<a href="#fn30" class="footnote-ref" id="fnref30"
+role="doc-noteref"><sup>30</sup></a></td>
+<td>Нет affiliate</td>
+<td>🟢 Нет, открытая формула</td>
+<td>🟢 Прозрачная</td>
+<td><strong>Среднее/высокое</strong></td>
+</tr>
+<tr class="even">
+<td><strong>«Медуза» — политика рекламы VPN</strong><a href="#fn31"
+class="footnote-ref" id="fnref31"
+role="doc-noteref"><sup>31</sup></a></td>
+<td>Редакция «Медузы» (медиа)</td>
+<td><strong>Продажа рекламы VPN</strong> — это и есть бизнес</td>
+<td>🟡 Продаёт рекламу того, что «проверяет»; но критерии и логика
+отказа раскрыты</td>
+<td>🟢 <strong>Редкая прозрачность:</strong> не берём юрлиц из РФ; не
+берём использующих Яндекс.Метрику; проверяем инфраструктуру и отзывы;
+можем отказать по репутационным рискам<a href="#fn32"
+class="footnote-ref" id="fnref32"
+role="doc-noteref"><sup>32</sup></a></td>
+<td><strong>Среднее/специфическое.</strong> Это не тест, а
+<strong>открытый ad-policy</strong> — полезен как образец
+disclosure</td>
+</tr>
+<tr class="odd">
+<td><strong>vpncomparison.org</strong> (карта обзорников)</td>
+<td>Оператор не раскрыт</td>
+<td>Не раскрыто</td>
+<td>🟡 Сама модель не верифицирована, но страница приводит
+<strong>регистрационные номера компаний</strong> и даты сделок<a
+href="#fn33" class="footnote-ref" id="fnref33"
+role="doc-noteref"><sup>33</sup></a></td>
+<td>🟡 Labeled ecosystem + ссылки на первоисточники</td>
+<td><strong>Среднее/полезное как мета-карта.</strong> Брать не выводы, а
+факты регистрации</td>
+</tr>
+<tr class="even">
+<td><strong>vpntesting.com</strong> (ownership map)</td>
+<td>«VPN Testing Research Lab», с 2018<a href="#fn34"
+class="footnote-ref" id="fnref34"
+role="doc-noteref"><sup>34</sup></a></td>
+<td>Affiliate (есть disclosure)</td>
+<td>🟡 Affiliate-funded, но заявляет «No sponsored rankings / No
+pay-to-play»<a href="#fn35" class="footnote-ref" id="fnref35"
+role="doc-noteref"><sup>35</sup></a></td>
+<td>🟢 <strong>Корпоративные реквизиты, тикер, SEC, даты сделок, audit
+coverage</strong></td>
+<td><strong>Среднее/высокое как фактура по юрлицам</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>vpnstatus.site</strong></td>
+<td>Частный каталог<a href="#fn36" class="footnote-ref" id="fnref36"
+role="doc-noteref"><sup>36</sup></a></td>
+<td>Метка «Промо» у сервисов (напр. WPN.ME)<a href="#fn37"
+class="footnote-ref" id="fnref37"
+role="doc-noteref"><sup>37</sup></a></td>
+<td>🟡 Возможное платное продвижение</td>
+<td>🟡 Голосование пользователей «Работает/Частично/Не работает»</td>
+<td><strong>Среднее.</strong> Полезно как live-индикатор
+работоспособности, не как «истина»</td>
+</tr>
+<tr class="even">
+<td><strong>semnasem.org (ТОП-3)</strong></td>
+<td>Редакция «Семь на семь» + эксперт eQualitie<a href="#fn38"
+class="footnote-ref" id="fnref38"
+role="doc-noteref"><sup>38</sup></a></td>
+<td>Партнёрские ссылки с промокодом (<code>promocode=sevenseven</code>,
+utm)<a href="#fn39" class="footnote-ref" id="fnref39"
+role="doc-noteref"><sup>39</sup></a></td>
+<td>🟡 Есть affiliate-разметка на Paper VPN</td>
+<td>🟡 Экспертное мнение</td>
+<td><strong>Среднее.</strong> Ценно авторитетом эксперта, но ссылки
+партнёрские</td>
+</tr>
+<tr class="odd">
+<td><strong>gist BoberSdoh</strong></td>
+<td>Частный автор<a href="#fn40" class="footnote-ref" id="fnref40"
+role="doc-noteref"><sup>40</sup></a></td>
+<td>Заявлено «без рекламы»</td>
+<td>🟢 Нет (по заявлению)</td>
+<td>🟡 Личный опыт 15 сервисов + комментарии</td>
+<td><strong>Среднее.</strong> Живой опыт, но без воспроизводимости</td>
+</tr>
+<tr class="even">
+<td><strong>Habr-разборы</strong> (742890, 1056290, 1033400, 1077900,
+768698)</td>
+<td>Независимые исследователи<a href="#fn41" class="footnote-ref"
+id="fnref41" role="doc-noteref"><sup>41</sup></a><a href="#fn42"
+class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a><a
+href="#fn43" class="footnote-ref" id="fnref43"
+role="doc-noteref"><sup>43</sup></a><a href="#fn44" class="footnote-ref"
+id="fnref44" role="doc-noteref"><sup>44</sup></a><a href="#fn45"
+class="footnote-ref" id="fnref45"
+role="doc-noteref"><sup>45</sup></a></td>
+<td>Нет</td>
+<td>🟢/идеологическая предвзятость у части</td>
+<td>🟡 Авторские, но с фактурой, командами и ссылками</td>
+<td><strong>Среднее.</strong> Как аналитика — ценно, как «рейтинг» —
+нет</td>
+</tr>
+<tr class="odd">
+<td><strong>⚠️ RestorePrivacy</strong></td>
+<td><strong>Прекратил существование как независимый бренд</strong>,
+поглощён CyberInsider<a href="#fn46" class="footnote-ref" id="fnref46"
+role="doc-noteref"><sup>46</sup></a></td>
+<td>—</td>
+<td>🔴 Ссылаться на него как на «независимый источник»
+<strong>нельзя</strong></td>
+<td>—</td>
+<td><strong>Мёртвый источник.</strong> Проверять дату цитаты</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="чек-лист-аффилиат-помойка-vs-независимый-тест">3. Чек-лист:
+аффилиат-помойка vs независимый тест</h2>
+<p><strong>🔴 Красные флаги</strong> (одного достаточно для
+настороженности):</p>
+<ol type="1">
+<li><strong>Партнёрские редиректы</strong> вместо прямых ссылок
+(<code>/go-nordvpn</code>, <code>?ref=</code>, <code>utm_aff</code>,
+<code>promocode=</code>, <code>utm_source</code>). <em>Примеры:
+vpnlove.me<a href="#fn47" class="footnote-ref" id="fnref47"
+role="doc-noteref"><sup>47</sup></a>, semnasem<a href="#fn48"
+class="footnote-ref" id="fnref48"
+role="doc-noteref"><sup>48</sup></a>.</em></li>
+<li><strong>Продажа сервисов прямо на странице рейтинга</strong> —
+кнопки «Купить», «Promo», «через VPNPay». <em>Пример: vpnlove.org<a
+href="#fn49" class="footnote-ref" id="fnref49"
+role="doc-noteref"><sup>49</sup></a>.</em></li>
+<li><strong>Свой сервис в собственном топе.</strong> <em>Пример: RKS VPN
+в «Топ редакции» vpnlove.org<a href="#fn50" class="footnote-ref"
+id="fnref50" role="doc-noteref"><sup>50</sup></a>.</em></li>
+<li><strong>Владелец рейтинга = владелец VPN.</strong> <em>Aura/Pango
+владеет <strong>Comparitech, ProPrivacy, BestVPN.com</strong> и 14 VPN;
+Kape владеет <strong>vpnMentor и WizCase</strong> и четырьмя VPN; Ziff
+Davis владеет <strong>PCMag и Mashable</strong> и брендами
+IPVanish/StrongVPN<a href="#fn51" class="footnote-ref" id="fnref51"
+role="doc-noteref"><sup>51</sup></a><a href="#fn52" class="footnote-ref"
+id="fnref52" role="doc-noteref"><sup>52</sup></a><a href="#fn53"
+class="footnote-ref" id="fnref53"
+role="doc-noteref"><sup>53</sup></a>.</em></li>
+<li><strong>Методология недоступна/битая</strong> —
+<code>AccessDenied</code>, 404, заглушка. <em>Пример:
+<code>vpnlove.org/methodology/</code><a href="#fn54"
+class="footnote-ref" id="fnref54"
+role="doc-noteref"><sup>54</sup></a>.</em></li>
+<li><strong>Нет disclosure аффилиатности</strong> или он спрятан в
+футер. <em>vpnMentor: «the disclosure exists but lives in footer
+boilerplate, not in the rankings»<a href="#fn55" class="footnote-ref"
+id="fnref55" role="doc-noteref"><sup>55</sup></a>.</em></li>
+<li><strong>Шаблон «Top-10 / Best VPNs»</strong> с фиксированным набором
+крупных брендов (у CNET в одном обзоре NordVPN/Surfshark/ExpressVPN
+упоминаются 60/51/65 раз)<a href="#fn56" class="footnote-ref"
+id="fnref56" role="doc-noteref"><sup>56</sup></a>.</li>
+<li><strong>Cookie stuffing / фейковые «Топ-10»</strong> — описано в
+Habr 742890<a href="#fn57" class="footnote-ref" id="fnref57"
+role="doc-noteref"><sup>57</sup></a>.</li>
+<li><strong>Домены-двойники бренда.</strong> Вокруг имени «Медуза»
+работают как минимум <strong>пять</strong> несвязанных VPN-сайта:
+<code>meduzavpn.com</code>, <code>meduzacore.com</code>,
+<code>medusanet.org</code>, <code>mediavpn.net</code>,
+<code>meduzafast.space</code><a href="#fn58" class="footnote-ref"
+id="fnref58" role="doc-noteref"><sup>58</sup></a><a href="#fn59"
+class="footnote-ref" id="fnref59" role="doc-noteref"><sup>59</sup></a><a
+href="#fn60" class="footnote-ref" id="fnref60"
+role="doc-noteref"><sup>60</sup></a>. Ориентироваться нужно на домен из
+первоисточника, а не на «брендовый» запрос.</li>
+<li><strong>«Мёртвые» или поглощённые обзорники</strong> —
+RestorePrivacy (поглощён CyberInsider), BestVPN.com (301 →
+ProPrivacy/Pango), 10bestvpn / BestVPN.co (домены на
+продажу/припаркованы)<a href="#fn61" class="footnote-ref" id="fnref61"
+role="doc-noteref"><sup>61</sup></a>. Устаревшая цитата выдаёт себя за
+живую независимость.</li>
+<li><strong>Нет воспроизводимости</strong> — ни raw-данных, ни дат, ни
+версии методики.</li>
+<li><strong>«Платное место»</strong> — косвенно: метка «Промо»<a
+href="#fn62" class="footnote-ref" id="fnref62"
+role="doc-noteref"><sup>62</sup></a>, форма «Apply to add your VPN»<a
+href="#fn63" class="footnote-ref" id="fnref63"
+role="doc-noteref"><sup>63</sup></a>. Прямого прайса нигде не найдено —
+утверждать нельзя.</li>
+</ol>
+<p><strong>🟢 Зелёные флаги:</strong></p>
+<ol type="1">
+<li>Открытая <strong>методология с версиями, датами и авторами</strong>
+(OONI называет всех соавторов и дату<a href="#fn64" class="footnote-ref"
+id="fnref64" role="doc-noteref"><sup>64</sup></a>).</li>
+<li><strong>Независимый технический аудит</strong> (не «экспертное
+мнение») + open-source клиенты.</li>
+<li><strong>Warrant canary</strong> с PGP-подписью и ежедневным
+обновлением (Trust.Zone — единственный подтверждённый случай среди
+проверенных)<a href="#fn65" class="footnote-ref" id="fnref65"
+role="doc-noteref"><sup>65</sup></a>.</li>
+<li><strong>Bug-bounty</strong> и публичный security.txt<a href="#fn66"
+class="footnote-ref" id="fnref66"
+role="doc-noteref"><sup>66</sup></a>.</li>
+<li><strong>Отсутствие рекламы и партнёрских ссылок</strong>,
+донатная/грантовая модель: OONI<a href="#fn67" class="footnote-ref"
+id="fnref67" role="doc-noteref"><sup>67</sup></a>, Privacy Guides
+(501(c)(3), no affiliate links)<a href="#fn68" class="footnote-ref"
+id="fnref68" role="doc-noteref"><sup>68</sup></a>, vpnscorecard<a
+href="#fn69" class="footnote-ref" id="fnref69"
+role="doc-noteref"><sup>69</sup></a>.</li>
+<li><strong>Раскрытие конфликтов интересов</strong> и уровня доверия к
+источникам: vpnscorecard<a href="#fn70" class="footnote-ref"
+id="fnref70" role="doc-noteref"><sup>70</sup></a> — образец; «Медуза»
+публикует <strong>открытые критерии</strong> допуска VPN в рекламу<a
+href="#fn71" class="footnote-ref" id="fnref71"
+role="doc-noteref"><sup>71</sup></a>; ProPrivacy прямо пишет <em>«almost
+every comparison and review site on the internet operates an affiliate
+model»</em><a href="#fn72" class="footnote-ref" id="fnref72"
+role="doc-noteref"><sup>72</sup></a>.</li>
+<li><strong>Воспроизводимые измерения</strong>: PCAPdroid, App Privacy
+Report, OSINT, raw-датасеты<a href="#fn73" class="footnote-ref"
+id="fnref73" role="doc-noteref"><sup>73</sup></a><a href="#fn74"
+class="footnote-ref" id="fnref74"
+role="doc-noteref"><sup>74</sup></a>.</li>
+<li><strong>Сторонний сертификатор</strong> (Privacy Guides<a
+href="#fn75" class="footnote-ref" id="fnref75"
+role="doc-noteref"><sup>75</sup></a>), а не саморекомендация.</li>
+</ol>
+<hr />
+<h2 id="разбор-рунет-рейтингов">4. Разбор рунет-рейтингов</h2>
+<h3 id="vpnlove.org-vpnlove.me-важно-не-путать">4.1. vpnlove.org ≠
+vpnlove.me — важно не путать</h3>
+<ul>
+<li><strong>vpnlove.org</strong> — рейтинг <strong>RKS Global</strong>,
+связанный с Роскомсвободой<a href="#fn76" class="footnote-ref"
+id="fnref76" role="doc-noteref"><sup>76</sup></a><a href="#fn77"
+class="footnote-ref" id="fnref77" role="doc-noteref"><sup>77</sup></a>.
+В «Топ редакции» — собственный <strong>RKS VPN</strong> (XRay-core),
+<strong>Amnezia Premium / hidemy.name / Browsec</strong> «через VPNPay»,
+баннер <strong>fbVPN</strong>. Ссылка на методологию ведёт в приватный
+Google Cloud bucket<a href="#fn78" class="footnote-ref" id="fnref78"
+role="doc-noteref"><sup>78</sup></a>. В «Вёрстке» тот же рейтинг
+фигурирует как
+<strong><code>storage.googleapis.com/vpnlove</code></strong><a
+href="#fn79" class="footnote-ref" id="fnref79"
+role="doc-noteref"><sup>79</sup></a> — то есть это тот же ресурс, что и
+vpnlove.org.</li>
+<li><strong>vpnlove.me</strong> — <strong>отдельный</strong>
+коммерческий обзорник с партнёрскими редиректами<a href="#fn80"
+class="footnote-ref" id="fnref80"
+role="doc-noteref"><sup>80</sup></a>.</li>
+</ul>
+<h3 id="vpn-guild-vpnguild.org">4.2. VPN Guild (vpnguild.org)</h3>
+<p>Нонпрофит-<strong>ассоциация провайдеров</strong><a href="#fn81"
+class="footnote-ref" id="fnref81" role="doc-noteref"><sup>81</sup></a>.
+Верифицированный список (8 сервисов): <strong>Amnezia VPN, BlancVPN,
+hidemyname, Icegate VPN, Paper VPN, VPN Generator, Xeovo VPN,
+Surfshark</strong><a href="#fn82" class="footnote-ref" id="fnref82"
+role="doc-noteref"><sup>82</sup></a>. Методология: анкета провайдера →
+проверка полноты данных → экспертиза + риск-анализ → рекомендации.
+Прямая оговорка: <em>«We do not conduct a technical audit, but provide
+an expert opinion»</em><a href="#fn83" class="footnote-ref" id="fnref83"
+role="doc-noteref"><sup>83</sup></a>. Обновление ≥1 раза в год.</p>
+<blockquote>
+<p><strong>Контекст из «Вёрстки»:</strong> у большинства участников
+гильдии «корни из России», что, по мнению эксперта RKS Global, помогает
+им понимать местные механизмы цензуры<a href="#fn84"
+class="footnote-ref" id="fnref84"
+role="doc-noteref"><sup>84</sup></a>.</p>
+</blockquote>
+<h3 id="vpnstatus.site-живой-индикатор">4.3. vpnstatus.site — «живой»
+индикатор</h3>
+<p>Каталог 321 VPN (217 «работают»), 1826 отзывов (обн. 29.09.2026),
+ранжирование — <strong>голосование пользователей</strong>
+«Работает/Частично/Не работает» по операторам (МТС, МегаФон, Билайн,
+Tele2, Ростелеком)<a href="#fn85" class="footnote-ref" id="fnref85"
+role="doc-noteref"><sup>85</sup></a>. У части записей — метка
+<strong>«Промо»</strong> (например, WPN.ME) — признак платного
+размещения<a href="#fn86" class="footnote-ref" id="fnref86"
+role="doc-noteref"><sup>86</sup></a>. Практическая ценность — актуальный
+статус обхода ТСПУ и белых списков; доверять стоит как
+<em>индикатору</em>, не как экспертному вердикту.</p>
+<h3 id="semnasem-топ-3-от-эксперта">4.4. semnasem — ТОП-3 от
+эксперта</h3>
+<p>Материал «Семь на семь»: рекомендации <strong>Леонида
+Юлдашева</strong> (IT-специалист, координатор проектов
+<strong>eQualitie</strong>)<a href="#fn87" class="footnote-ref"
+id="fnref87" role="doc-noteref"><sup>87</sup></a>. ТОП-3: <strong>Paper
+VPN</strong> (от издания «Бумага»), <strong>Red Shield VPN</strong>,
+<strong>Amnezia VPN</strong>. Ссылка на Paper VPN содержит партнёрский
+промокод (<code>promocode=sevenseven</code>, utm)<a href="#fn88"
+class="footnote-ref" id="fnref88" role="doc-noteref"><sup>88</sup></a>.
+Экспертиза ценна, но разметка — affiliate.</p>
+<h3 id="gist-обзор-без-рекламы">4.5. gist-обзор «без рекламы»</h3>
+<p>Частный обзор 10 сервисов: Mullvad, ProtonVPN, AmneziaVPN, NordVPN,
+ProxysVPN, Hiddify, Outline, IVPN, Surfshark, self-host<a href="#fn89"
+class="footnote-ref" id="fnref89" role="doc-noteref"><sup>89</sup></a>.
+Ключевые наблюдения (дочитано до конца):</p>
+<ul>
+<li><strong>Mullvad</strong> (€5/мес, без e-mail, оплата наличными) и
+<strong>IVPN</strong> (Monero, AntiTracker) — «исторически лучшие в нише
+приватности, а не обхода блокировок»<a href="#fn90" class="footnote-ref"
+id="fnref90" role="doc-noteref"><sup>90</sup></a>.</li>
+<li><strong>NordVPN</strong> — утечка 2018 года;
+<strong>Surfshark</strong> — тот же материнский бренд (обе — Nord
+Security)<a href="#fn91" class="footnote-ref" id="fnref91"
+role="doc-noteref"><sup>91</sup></a>.</li>
+<li><strong>ExpressVPN</strong> — «после смены владельцев в 2021 году у
+многих появилось ощущение, что качество и приватность снизились»;
+<strong>PIA</strong> — «старая школа, под жёстким DPI не работает»;
+<strong>Hotspot Shield, Hola, TunnelBear</strong> — «либо проблемы с
+приватностью в прошлом, либо устаревшие технологии»<a href="#fn92"
+class="footnote-ref" id="fnref92"
+role="doc-noteref"><sup>92</sup></a>.</li>
+<li>Рабочие бесплатные варианты: <strong>ProtonVPN</strong> (с
+лимитами), <strong>Outline</strong> (но настраивать самому)<a
+href="#fn93" class="footnote-ref" id="fnref93"
+role="doc-noteref"><sup>93</sup></a>.</li>
+<li>Итог: «то, что работало в 2023, может уже не работать в 2026» —
+список = снимок, не истина<a href="#fn94" class="footnote-ref"
+id="fnref94" role="doc-noteref"><sup>94</sup></a>.</li>
+<li>⚠️ <strong>Признаки витрины в комментариях:</strong> в треде
+присутствуют представитель сервиса («я связан с командой artvpn»),
+реферальный бот-линк и развёрнутая реклама «таблицы цен по 100+
+провайдерам»<a href="#fn95" class="footnote-ref" id="fnref95"
+role="doc-noteref"><sup>95</sup></a>.</li>
+</ul>
+<h3 id="вёрстка-что-реально-видно-за-фасадом-рейтингов">4.6. «Вёрстка»:
+что реально видно за фасадом рейтингов</h3>
+<p>Материал «Вёрстки» (со ссылкой на экспертов RKS Global) фиксирует
+важные детали<a href="#fn96" class="footnote-ref" id="fnref96"
+role="doc-noteref"><sup>96</sup></a>:</p>
+<ul>
+<li><strong>Иранский и китайский след</strong> в VPN-приложениях: в
+Иране найдена серия VPN со вредоносными свойствами, предположительно
+связанная с властями; часть популярных в РФ VPN принадлежит одним
+владельцам, возможна связь с госструктурами <strong>Китая</strong><a
+href="#fn97" class="footnote-ref" id="fnref97"
+role="doc-noteref"><sup>97</sup></a>.</li>
+<li><strong>«VPN Love уже несколько лет проверяет сервисы»</strong> —
+подаётся «Вёрсткой» как пример аудита, чем и создаётся эффект
+легитимности у аффилиатного ресурса<a href="#fn98" class="footnote-ref"
+id="fnref98" role="doc-noteref"><sup>98</sup></a>.</li>
+<li><strong>Сервисы с рабочими протоколами:</strong> Amnezia VPN, RKS
+VPN, Red Shield VPN, Xeovo, Icegate VPN<a href="#fn99"
+class="footnote-ref" id="fnref99"
+role="doc-noteref"><sup>99</sup></a>.</li>
+<li><strong>AltVPN</strong> — США, <strong>девять серверов с российскими
+IP</strong>, до 1 Гбит/с; <strong>BlancVPN</strong> — Эстония, с 2018,
+оплата через бот <strong>FCK_RKN</strong>; <strong>hidemyname</strong> —
+Белиз, с 2006, работает без регистрации; <strong>Icegate</strong> — США
++ Армения, «только проприетарный код вместо публичных библиотек»;
+<strong>Xeovo</strong> — Финляндия, оплата наличными письмом;
+<strong>MeduzaVPN</strong> — не фигурирует<a href="#fn100"
+class="footnote-ref" id="fnref100"
+role="doc-noteref"><sup>100</sup></a>.</li>
+</ul>
+<h3 id="медуза-прозрачная-политика-но-это-реклама-а-не-тест">4.7.
+«Медуза»: прозрачная политика — но это реклама, а не тест</h3>
+<p>Редакция «Медузы» 16.03.2026 опубликовала <strong>открытые
+критерии</strong>, по которым берёт (или не берёт) VPN в рекламу<a
+href="#fn101" class="footnote-ref" id="fnref101"
+role="doc-noteref"><sup>101</sup></a>:</p>
+<ol type="1">
+<li>не работаем с юрлицами, зарегистрированными в РФ; руководители
+должны жить за пределами РФ и не посещать её;</li>
+<li>не рекламируем VPN, использующий российские
+аналитические/маркетинговые инструменты (например,
+<strong>Яндекс.Метрику</strong>);</li>
+<li>проверяем отсутствие инфраструктуры (серверов и домена) в России и
+отсутствие отправки трафика на российские серверы;</li>
+<li>изучаем отзывы и удовлетворённость пользователей;</li>
+<li>можем отказаться по репутационным рискам<a href="#fn102"
+class="footnote-ref" id="fnref102"
+role="doc-noteref"><sup>102</sup></a>.</li>
+</ol>
+<p><strong>Как это читать.</strong> Пункты 1–3 почти дословно повторяют
+выводы RKS Global<a href="#fn103" class="footnote-ref" id="fnref103"
+role="doc-noteref"><sup>103</sup></a> и собственные критерии приватности
+— это хороший образец <strong>disclosure</strong>. Но по жанру это
+<strong>ad-policy рекламной площадки</strong>, а не независимый замер:
+«Медуза» зарабатывает на размещении. Использовать её как
+<strong>чек-лист требований</strong> — можно; как «рейтинг» — нет.</p>
+<blockquote>
+<p>⚠️ Отдельно про имена: существует сервис <strong>MeduzaVPN</strong>
+(<code>meduzavpn.com</code>; оператор — <strong>IPFB LLC</strong>, 1207
+Delaware Ave #1262, Wilmington, DE, США; есть свой протокол «MeduzaVPN
+ULTRA»)<a href="#fn104" class="footnote-ref" id="fnref104"
+role="doc-noteref"><sup>104</sup></a>. Связь этого сервиса с редакцией
+«Медузы» <strong>первоисточником не подтверждена</strong>, а рядом живут
+<code>meduzacore.com</code> (тот же оператор),
+<code>medusanet.org</code> и <code>mediavpn.net</code> —
+<strong>разные</strong> владельцы<a href="#fn105" class="footnote-ref"
+id="fnref105" role="doc-noteref"><sup>105</sup></a>. Это учебный пример
+<strong>доменов-двойников</strong>: «брендовый» поиск не защищает от
+подмены.</p>
+</blockquote>
+<hr />
+<h2 id="карта-скрытой-монополии-vpn-рынка-и-обзорных-сайтов">5. Карта
+скрытой монополии VPN-рынка и обзорных сайтов</h2>
+<p>По разбору Xeovo (источник — VPNpro): <strong>105 VPN принадлежат 24
+компаниям</strong> (9 крупных образований)<a href="#fn106"
+class="footnote-ref" id="fnref106"
+role="doc-noteref"><sup>106</sup></a>. В редакции 2026 года карта
+уточнена<a href="#fn107" class="footnote-ref" id="fnref107"
+role="doc-noteref"><sup>107</sup></a><a href="#fn108"
+class="footnote-ref" id="fnref108"
+role="doc-noteref"><sup>108</sup></a><a href="#fn109"
+class="footnote-ref" id="fnref109"
+role="doc-noteref"><sup>109</sup></a><a href="#fn110"
+class="footnote-ref" id="fnref110"
+role="doc-noteref"><sup>110</sup></a><a href="#fn111"
+class="footnote-ref" id="fnref111"
+role="doc-noteref"><sup>111</sup></a>:</p>
+<h3 id="кто-владеет-vpn-брендами">5.1. Кто владеет VPN-брендами</h3>
+<ul>
+<li><strong>Kape Technologies</strong> (ex-Crossrider, обвинялся в
+рекламном/вредоносном ПО; Лондонская биржа): <strong>ExpressVPN,
+CyberGhost, Private Internet Access, Intego, Zenmate</strong>, а также
+<strong>обзорники vpnMentor и WizCase</strong> (через покупку
+Webselenese, 2021)<a href="#fn112" class="footnote-ref" id="fnref112"
+role="doc-noteref"><sup>112</sup></a><a href="#fn113"
+class="footnote-ref" id="fnref113"
+role="doc-noteref"><sup>113</sup></a><a href="#fn114"
+class="footnote-ref" id="fnref114"
+role="doc-noteref"><sup>114</sup></a>.</li>
+<li><strong>Ziff Davis, Inc.</strong> (ex-j2 Global; Делавэр, США;
+<strong>NASDAQ: ZD</strong>; ~4500 сотрудников; выручка $1,4 млрд в
+2023): VPN-бренды <strong>IPVanish, StrongVPN, Encrypt.me</strong>
+(куплены у StackPath в январе 2019) и <strong>Perimeter 81</strong>
+(Израиль/США, куплен в июле 2023 за $100 млн). При этом Ziff Davis
+владеет <strong>PCMag, Mashable, IGN</strong> и
+<strong>Ookla/Speedtest</strong>. Прямая формулировка конфликта:
+<em>«Ziff Davis owns PCMag, which publishes VPN reviews covering Ziff
+Davis-owned VPN brands like IPVanish»</em><a href="#fn115"
+class="footnote-ref" id="fnref115"
+role="doc-noteref"><sup>115</sup></a>.</li>
+<li><strong>Aura (группа Pango, AnchorFree; ultimate parent — WC SACD
+Holdings Inc.)</strong> — 14 VPN: Hotspot Shield, TouchVPN, JustVPN,
+унаследованный Betternet и др. <strong>Плюс обзорники:</strong>
+<strong>Comparitech</strong> (Comparitech Limited, UK 09962280, с
+15.10.2021 ≥75% принадлежит Anchorfree Ltd, UK 07288764),
+<strong>ProPrivacy</strong> (самораскрытие: <em>«owned and operated by
+Comparitech Limited which in turn is part of the Pango group of
+companies»</em>), а также унаследованный домен
+<strong>BestVPN.com</strong> (301 → ProPrivacy)<a href="#fn116"
+class="footnote-ref" id="fnref116"
+role="doc-noteref"><sup>116</sup></a>.</li>
+<li><strong>Gaditek</strong> (Пакистан): PureVPN, Ivacy + 2
+скрытых.</li>
+<li><strong>Nord Security</strong>: NordVPN, NordLayer, Atlas VPN,
+Surfshark.</li>
+<li><strong>VPNpro</strong> (украинская исследовательская команда) —
+автор landmark-исследования «105 VPNs run by 24 companies»; сайт сейчас
+отдаёт 403, считается <strong>дремлющим</strong><a href="#fn117"
+class="footnote-ref" id="fnref117"
+role="doc-noteref"><sup>117</sup></a>.</li>
+<li><strong>Innovative Connecting</strong> — 16 VPN; <strong>Actmobile
+Networks</strong> — 6 VPN + Free VPN LLC; <strong>SuperSoftTech</strong>
+— 5 VPN<a href="#fn118" class="footnote-ref" id="fnref118"
+role="doc-noteref"><sup>118</sup></a>.</li>
+</ul>
+<h3 id="кто-владеет-обзорными-сайтами">5.2. Кто владеет обзорными
+сайтами</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Обзорник</th>
+<th>Владелец</th>
+<th>Характер конфликта</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vpnMentor, WizCase</td>
+<td><strong>Kape Technologies</strong></td>
+<td>Рейтингуют VPN своего же владельца; disclosure — в футере<a
+href="#fn119" class="footnote-ref" id="fnref119"
+role="doc-noteref"><sup>119</sup></a></td>
+</tr>
+<tr class="even">
+<td>PCMag, Mashable</td>
+<td><strong>Ziff Davis</strong></td>
+<td>Обзорщик и обозреваемые — на одном балансе<a href="#fn120"
+class="footnote-ref" id="fnref120"
+role="doc-noteref"><sup>120</sup></a><a href="#fn121"
+class="footnote-ref" id="fnref121"
+role="doc-noteref"><sup>121</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Comparitech, ProPrivacy, BestVPN.com</td>
+<td><strong>Aura/Pango</strong></td>
+<td>14 «конкурентов» внутри одной группы<a href="#fn122"
+class="footnote-ref" id="fnref122"
+role="doc-noteref"><sup>122</sup></a></td>
+</tr>
+<tr class="even">
+<td>CNET</td>
+<td>Red Ventures</td>
+<td>Affiliate-ядро: NordVPN/Surfshark/ExpressVPN<a href="#fn123"
+class="footnote-ref" id="fnref123"
+role="doc-noteref"><sup>123</sup></a></td>
+</tr>
+<tr class="odd">
+<td>TechRadar, Tom’s Guide</td>
+<td>Future plc</td>
+<td>Крупнейший affiliate-паблишер сегмента<a href="#fn124"
+class="footnote-ref" id="fnref124"
+role="doc-noteref"><sup>124</sup></a></td>
+</tr>
+<tr class="even">
+<td>CyberInsider</td>
+<td>Заявлено «independent»</td>
+<td>Делал оригинальные расследования (история Kape), но сам живёт на
+комиссиях; <strong>поглотил RestorePrivacy</strong><a href="#fn125"
+class="footnote-ref" id="fnref125"
+role="doc-noteref"><sup>125</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Privacy Guides</td>
+<td>Нонпрофит 501(c)(3)</td>
+<td><strong>Нет affiliate-ссылок</strong> — эталон<a href="#fn126"
+class="footnote-ref" id="fnref126"
+role="doc-noteref"><sup>126</sup></a></td>
+</tr>
+<tr class="even">
+<td>r/VPN</td>
+<td>Сообщество Reddit</td>
+<td>Шумно, но без коммерческого интереса; только как сигнал<a
+href="#fn127" class="footnote-ref" id="fnref127"
+role="doc-noteref"><sup>127</sup></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Вывод для инструкции:</strong> «независимые» бренды часто
+принадлежат одной структуре, а владелец VPN-бренда нередко владеет и
+«рейтинговым» сайтом, который его же и рекомендует. Поддерживать
+по-настоящему независимые источники — не идеология, а рыночный
+ограничитель<a href="#fn128" class="footnote-ref" id="fnref128"
+role="doc-noteref"><sup>128</sup></a><a href="#fn129"
+class="footnote-ref" id="fnref129"
+role="doc-noteref"><sup>129</sup></a>.</p>
+<hr />
+<h2 id="протоколы-работающие-в-россии-2026">6. Протоколы, работающие в
+России (2026)</h2>
+<p>По RKS Global / «Вёрстке»<a href="#fn130" class="footnote-ref"
+id="fnref130" role="doc-noteref"><sup>130</sup></a>, vpnstatus<a
+href="#fn131" class="footnote-ref" id="fnref131"
+role="doc-noteref"><sup>131</sup></a> и DPI Detector<a href="#fn132"
+class="footnote-ref" id="fnref132"
+role="doc-noteref"><sup>132</sup></a>:</p>
+<ul>
+<li><strong>Надёжно проходят ТСПУ:</strong> <strong>AmneziaWG</strong>
+(форк WireGuard с обфускацией, разработан российскими активистами
+цифровых прав) и <strong>XRay / VLESS + Reality</strong>; также
+<strong>Hysteria2</strong> и <strong>XHTTP</strong><a href="#fn133"
+class="footnote-ref" id="fnref133"
+role="doc-noteref"><sup>133</sup></a><a href="#fn134"
+class="footnote-ref" id="fnref134"
+role="doc-noteref"><sup>134</sup></a>.</li>
+<li><strong>Режутся по сигнатурам:</strong> <strong>IKEv2, OpenVPN,
+«обычный» WireGuard и Shadowsocks</strong> — по данным DPI Detector, «не
+могут полноценно обойти блокировку властей»<a href="#fn135"
+class="footnote-ref" id="fnref135"
+role="doc-noteref"><sup>135</sup></a><a href="#fn136"
+class="footnote-ref" id="fnref136"
+role="doc-noteref"><sup>136</sup></a>.</li>
+<li><strong>Сервисы, использующие совместимые протоколы:</strong>
+Amnezia VPN, RKS VPN, Red Shield VPN, Xeovo, Icegate VPN<a href="#fn137"
+class="footnote-ref" id="fnref137"
+role="doc-noteref"><sup>137</sup></a>.</li>
+<li><strong>Устаревшее и рискованное:</strong> Shadowsocks в жёстких
+регионах (частый флаг против Outline)<a href="#fn138"
+class="footnote-ref" id="fnref138"
+role="doc-noteref"><sup>138</sup></a>.</li>
+<li><strong>Практический комментарий из gist:</strong> «если живёте там,
+где интернет жёстко фильтруется — старые большие сервисы вроде
+NordVPN/Surfshark будут разочаровывать; смотрите современные стеки —
+Amnezia, Hiddify, self-hosted»<a href="#fn139" class="footnote-ref"
+id="fnref139" role="doc-noteref"><sup>139</sup></a>. Один из читателей
+треда: «первые 4 [сервиса из списка] уже точно сдохли в РФ»<a
+href="#fn140" class="footnote-ref" id="fnref140"
+role="doc-noteref"><sup>140</sup></a>.</li>
+</ul>
+<p>⚠️ При переходе Рунета на <strong>«белые списки»</strong> обычные VPN
+не работают: пройти сможет только сервис, сам включённый в разрешённый
+перечень; также не будут работать сайты с инструкциями по обходу<a
+href="#fn141" class="footnote-ref" id="fnref141"
+role="doc-noteref"><sup>141</sup></a>.</p>
+<hr />
+<h2
+id="технические-ловушки-ломают-анонимность-даже-при-идеальном-клиенте">7.
+Технические ловушки (ломают анонимность даже при «идеальном»
+клиенте)</h2>
+<h3 id="серверная-маршрутизация-сливает-реальный-ip-habr-1056290">7.1.
+Серверная маршрутизация сливает реальный IP (Habr 1056290)</h3>
+<p>Эксперимент на жёстко изолированном стенде (VirtualBox NAT + полный
+блок UDP + Proxifier + локальный SOCKS5 Happ на порту
+<strong>10808</strong>, маршрутизация в клиенте выключена)<a
+href="#fn142" class="footnote-ref" id="fnref142"
+role="doc-noteref"><sup>142</sup></a>:</p>
+<ul>
+<li><strong>Личный VPS + «чистый» VLESS</strong> → все чекеры (2ip.ru) и
+мессенджер Element видят <strong>IP VPS</strong>.</li>
+<li><strong>Коммерческая подписка</strong> → 2ip.ru и Element видят
+<strong>реальный IP пользователя</strong>, при этом часть других
+сервисов показывает IP сервера.</li>
+</ul>
+<p><strong>Причина</strong> — правила маршрутизации, прописанные
+админами подписки на своих серверах (блок <code>routing.rules</code> в
+ядре Xray/sing-box): трафик к российским подсетям не выпускается через
+европейский IP, а идёт сквозным пробросом с подмешиванием исходного
+маркера сессии (в т.ч. через <code>X-Forwarded-For</code>). Факт «своей»
+серверной маршрутизации <strong>подтверждён техподдержкой
+провайдера</strong> в переписке<a href="#fn143" class="footnote-ref"
+id="fnref143" role="doc-noteref"><sup>143</sup></a>.</p>
+<blockquote>
+<p>Вывод автора: <strong>«анонимность заканчивается там, где начинается
+коммерческий VPN/VLESS-провайдер»</strong><a href="#fn144"
+class="footnote-ref" id="fnref144"
+role="doc-noteref"><sup>144</sup></a>.</p>
+</blockquote>
+<h3 id="dpiтспу-как-именно-блокируют-ooni-дек.-2024">7.2. DPI/ТСПУ: как
+именно блокируют (OONI, дек. 2024)</h3>
+<p>Совместное исследование <strong>RKS Global + OONI</strong> (данные
+01.09.2023–01.09.2024; авторы: E. Ячменева, M. Xynou, M. Gulati, A.
+Filastò)<a href="#fn145" class="footnote-ref" id="fnref145"
+role="doc-noteref"><sup>145</sup></a><a href="#fn146"
+class="footnote-ref" id="fnref146"
+role="doc-noteref"><sup>146</sup></a>:</p>
+<ul>
+<li>Подтверждена блокировка <strong>не менее 279 доменов</strong>
+новостных медиа — вдвое больше, чем 139 в исследовании 2023 года;
+большинство доменов блокировалось на <strong>&gt;10 различных
+AS</strong> в России<a href="#fn147" class="footnote-ref" id="fnref147"
+role="doc-noteref"><sup>147</sup></a>.</li>
+<li><strong>Большинство блокировок — через вмешательство в TLS:</strong>
+таймаут TLS-сессии либо <strong>вброс RST-пакета сразу после
+ClientHello</strong><a href="#fn148" class="footnote-ref" id="fnref148"
+role="doc-noteref"><sup>148</sup></a>.</li>
+<li><strong>Централизованное управление, децентрализованное
+развёртывание DPI:</strong> блокировки срабатывают по полю
+<strong>SNI</strong>, одинаковые домены падают одновременно в разных
+сетях → вывод о <strong>ТСПУ</strong> и централизованном управлении
+Роскомнадзора (совпадает с выводами Censored Planet)<a href="#fn149"
+class="footnote-ref" id="fnref149"
+role="doc-noteref"><sup>149</sup></a><a href="#fn150"
+class="footnote-ref" id="fnref150"
+role="doc-noteref"><sup>150</sup></a>.</li>
+<li><strong>Война медиа-цензуры Россия↔︎ЕС:</strong> после решения
+Совета ЕС (май 2024) МИД РФ в июне 2024 объявил об ограничении доступа к
+<strong>81 СМИ стран ЕС</strong>; их сайты блокируются в РФ <strong>со 2
+августа 2024</strong><a href="#fn151" class="footnote-ref" id="fnref151"
+role="doc-noteref"><sup>151</sup></a>.</li>
+<li>В части сетей фиксируются <strong>DNS-блокировки</strong> (например,
+подмена ответа на <code>188.186.146.208</code>)<a href="#fn152"
+class="footnote-ref" id="fnref152"
+role="doc-noteref"><sup>152</sup></a>.</li>
+<li>Интервью с <strong>15 независимыми СМИ</strong>: финансовые
+трудности, закрытия (Туймаада, «Кедр», «Эхо Кавказа», «Курьер.Среда»,
+«Астра», «Служба поддержки», It’s My City), проблемы безопасности (в
+т.ч. «ограничения в распространении информации о VPN»), потеря
+аудитории, рост самоцензуры<a href="#fn153" class="footnote-ref"
+id="fnref153" role="doc-noteref"><sup>153</sup></a>.</li>
+</ul>
+<h3
+id="детекция-vpn-внутри-российских-приложений-обновление-16.04.2026">7.3.
+Детекция VPN внутри российских приложений (обновление 16.04.2026)</h3>
+<p>По RKS Global<a href="#fn154" class="footnote-ref" id="fnref154"
+role="doc-noteref"><sup>154</sup></a>:</p>
+<ul>
+<li>Повторный анализ через 9 дней; <strong>26/30 приложений выпустили
+обновления</strong>; добавлен динамический тест.</li>
+<li><strong>Детекция VPN — уже во ВСЕХ 30 приложениях</strong> (ранее
+22/30, из них 19 отправляли статус на сервер).</li>
+<li><strong>7 приложений получают полный список установленных
+VPN-клиентов</strong> (было 2): Wildberries, 2ГИС, МТС, Ozon,
+Мегамаркет, RuStore, Одноклассники.</li>
+<li><strong>Все 7 приложений Яндекса</strong> — единый серверный
+endpoint + удалённый флаг для блокировки во всех продуктах сразу.</li>
+<li><strong>Split tunneling недостаточен:</strong> 13/30 сканируют
+сетевые интерфейсы (<code>tun0</code>); ещё 7 получают список клиентов
+независимо от маршрутизации.</li>
+<li>Фон: совещания Минцифры с 20+ компаниями, дедлайн 15.04.2026, угроза
+лишения IT-аккредитации; трекеры <strong>AppMetrica (Яндекс)</strong> и
+<strong>MyTracker (VK)</strong>; поиск <strong>Frida</strong>; перехват
+касаний экрана (<code>dispatchTouchEvent</code>) как поведенческая
+биометрия.</li>
+<li><strong>Рекомендации:</strong> VPN <strong>на роутере</strong>,
+<strong>Work Profile (Shelter)</strong>, два телефона, отзыв разрешений,
+ограничение фоновой активности<a href="#fn155" class="footnote-ref"
+id="fnref155" role="doc-noteref"><sup>155</sup></a>.</li>
+</ul>
+<blockquote>
+<p>Практический смысл для инструкции: <strong>VPN на устройстве =
+обнаружимый</strong>; <strong>VPN на роутере = невидим для
+приложений</strong> (нет VPN-интерфейса на устройстве)<a href="#fn156"
+class="footnote-ref" id="fnref156"
+role="doc-noteref"><sup>156</sup></a>.</p>
+</blockquote>
+<h3
+id="кастомные-ядра-и-запатентованные-протоколы-маркетинг-habr-1033400">7.4.
+«Кастомные ядра» и «запатентованные протоколы» — маркетинг (Habr
+1033400)</h3>
+<p>Разбор сервиса <strong>Kakadu</strong> (автор — Namilsky), дочитан до
+конца<a href="#fn157" class="footnote-ref" id="fnref157"
+role="doc-noteref"><sup>157</sup></a>:</p>
+<ul>
+<li>Заявления «invisible protocol», «запатентованная технология»
+<strong>не подтверждаются</strong>: патентный поиск (Роспатент, Google
+Patents) пуст.</li>
+<li>Пользовательское соглашение описывает ChaCha20-Poly1305 / Curve25519
+/ <strong>Noise Protocol</strong> — это фактически
+<strong>WireGuard</strong>.</li>
+<li><code>strings Kakadu.apk</code> показали
+<strong><code>sagernet/wireguard-go</code></strong> и
+<strong><code>sagernet/sing-box</code></strong> (<code>libbox.so</code>
+под arm64-v8a/armeabi-v7a/x86/x86_64) — свободный софт переупакован и
+назван «своей технологией». Автор отмечает нарушение
+<strong>GPLv3.0</strong> (требует открыть модифицированный код и указать
+авторство) — ни одно требование не соблюдено<a href="#fn158"
+class="footnote-ref" id="fnref158"
+role="doc-noteref"><sup>158</sup></a>.</li>
+<li>PCAPDroid: раз в 30 секунд — DNS-запросы на
+<strong>google-statistics.com</strong>, <strong>say-today.ru</strong>,
+firebaselogging.googleapis.com (последнее — Firebase; первые два —
+«вайбкод-заглушки»)<a href="#fn159" class="footnote-ref" id="fnref159"
+role="doc-noteref"><sup>159</sup></a>.</li>
+<li>Wireshark: связка <strong>VLESS + Reality</strong>; SNI
+<code>say-today.ru</code>, IP <code>155.212.215.82</code> (ISP
+<strong>SELECTEL</strong>), TCP-хендшейк как обычный HTTP/1.1 GET.
+Fallback-цепочка ведёт на веб-сервер локалхоста<a href="#fn160"
+class="footnote-ref" id="fnref160"
+role="doc-noteref"><sup>160</sup></a>.</li>
+<li><code>nslookup</code> подтвердил: <code>say-today.ru</code> и
+<code>google-statistics.com</code> → <strong>один и тот же IP</strong>
+<code>155.212.215.82</code>; телефоны на сайтах различаются только
+последней цифрой (<strong>+7 495 128449{0,2}</strong>); заявка через
+TempMail осталась без ответа; нет ценообразования<a href="#fn161"
+class="footnote-ref" id="fnref161"
+role="doc-noteref"><sup>161</sup></a>.</li>
+<li><strong>Критика:</strong> централизованный входной балансировщик
+(одна точка отказа), полное снятие ответственности в соглашении,
+«украденный свободный софт»<a href="#fn162" class="footnote-ref"
+id="fnref162" role="doc-noteref"><sup>162</sup></a>.</li>
+<li>В рекламном видео сервиса: «весь их трафик идёт сквозь русские
+сервера дальше в Европу» — косвенное подтверждение наблюдений автора<a
+href="#fn163" class="footnote-ref" id="fnref163"
+role="doc-noteref"><sup>163</sup></a>.</li>
+</ul>
+<p><strong>Правило:</strong> «эксклюзивное ядро» без публичного кода и
+патентов — почти всегда переупакованный open-source.</p>
+<hr />
+<h2 id="карточки-сервисов">8. Карточки сервисов</h2>
+<h3 id="red-shield-vpn">8.1. Red Shield VPN</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Факт</th>
+<th>Источник</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Юрлицо</td>
+<td><strong>Private Network Labs LLC</strong>, Hamilton, NY,
+<strong>США</strong> (Five Eyes)</td>
+<td><a href="#fn164" class="footnote-ref" id="fnref164"
+role="doc-noteref"><sup>164</sup></a></td>
+</tr>
+<tr class="even">
+<td>Владелец</td>
+<td><strong>Владислав Здольников</strong> (экс-IT-консультант ФБК)</td>
+<td><a href="#fn165" class="footnote-ref" id="fnref165"
+role="doc-noteref"><sup>165</sup></a><a href="#fn166"
+class="footnote-ref" id="fnref166"
+role="doc-noteref"><sup>166</sup></a><a href="#fn167"
+class="footnote-ref" id="fnref167"
+role="doc-noteref"><sup>167</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Governing law</td>
+<td>Противоречие: TOS §9 — <em>«USA; Panama; country of
+connection»</em>, §2(b) — <em>«operating within the European Union legal
+framework»</em></td>
+<td><a href="#fn168" class="footnote-ref" id="fnref168"
+role="doc-noteref"><sup>168</sup></a></td>
+</tr>
+<tr class="even">
+<td>Логи</td>
+<td><em>«We do not keep logs of your connections or traffic»</em>; при
+этом собираются access logs, affiliate cookies, платёжные данные;
+диагностический IP удаляется сразу</td>
+<td><a href="#fn169" class="footnote-ref" id="fnref169"
+role="doc-noteref"><sup>169</sup></a><a href="#fn170"
+class="footnote-ref" id="fnref170"
+role="doc-noteref"><sup>170</sup></a></td>
+</tr>
+<tr class="odd">
+<td><strong>Аудит</strong></td>
+<td>🔴 <strong>Нет.</strong> TechRadar: no-logs «not verified by an
+external auditor»</td>
+<td><a href="#fn171" class="footnote-ref" id="fnref171"
+role="doc-noteref"><sup>171</sup></a></td>
+</tr>
+<tr class="even">
+<td>Open-source</td>
+<td>🔴 Нет публичного репозитория</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Bug-bounty</td>
+<td>🟢 <strong>Есть</strong>, $100–$5 000+</td>
+<td><a href="#fn172" class="footnote-ref" id="fnref172"
+role="doc-noteref"><sup>172</sup></a></td>
+</tr>
+<tr class="even">
+<td>Fair usage</td>
+<td><strong>Лимит 1 ТБ/мес</strong>; при нарушении — <strong>permanent
+block, no refund at all</strong></td>
+<td><a href="#fn173" class="footnote-ref" id="fnref173"
+role="doc-noteref"><sup>173</sup></a></td>
+</tr>
+<tr class="odd">
+<td><strong>Trustpilot</strong></td>
+<td>🔴 <strong>2.1/5 («Poor», 9 отзывов)</strong> — Refund, Marketing,
+Spam, Subscription</td>
+<td><a href="#fn174" class="footnote-ref" id="fnref174"
+role="doc-noteref"><sup>174</sup></a></td>
+</tr>
+<tr class="even">
+<td>Магазины</td>
+<td>App Store 4.8/5 (~2.8K)<a href="#fn175" class="footnote-ref"
+id="fnref175" role="doc-noteref"><sup>175</sup></a>; Google Play ~8.18K
+отзывов<a href="#fn176" class="footnote-ref" id="fnref176"
+role="doc-noteref"><sup>176</sup></a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>РКН</td>
+<td>Заблокирован с <strong>15.09.2021</strong> (ТСПУ)</td>
+<td><a href="#fn177" class="footnote-ref" id="fnref177"
+role="doc-noteref"><sup>177</sup></a><a href="#fn178"
+class="footnote-ref" id="fnref178"
+role="doc-noteref"><sup>178</sup></a></td>
+</tr>
+<tr class="even">
+<td>Иск к РКН / ЕСПЧ</td>
+<td>Заявлено <strong>намерение</strong> судиться с Роскомнадзором и
+дойти до ЕСПЧ (В. Здольников, сентябрь 2021); <strong>факт подачи иска
+не подтверждён</strong></td>
+<td><a href="#fn179" class="footnote-ref" id="fnref179"
+role="doc-noteref"><sup>179</sup></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Типичные жалобы:</strong> скрытое автопродление (<em>«small
+print under the Pay button… deactivation button was broken»</em>), отказ
+в возврате, <em>«advertise protocols like RedLink Shadow, OpenConnect,
+OpenVPN — once you pay, these protocols are completely missing»</em>,
+сломанный split-tunneling<a href="#fn180" class="footnote-ref"
+id="fnref180" role="doc-noteref"><sup>180</sup></a>.</p>
+<h3 id="trust.zone">8.2. Trust.Zone</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Факт</th>
+<th>Источник</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Юрлицо</td>
+<td><strong>Internet Privacy Ltd</strong>, Unit 117, Orion Mall, Palm
+Street, P.O. Box 828, Victoria, Mahé, <strong>Сейшелы</strong>;
+платёжный дистрибьютор — <strong>Tersys Group OÜ</strong> (Таллин,
+Vesivärava tn 50-201); governing law — Сейшелы</td>
+<td><a href="#fn181" class="footnote-ref" id="fnref181"
+role="doc-noteref"><sup>181</sup></a></td>
+</tr>
+<tr class="even">
+<td>«Trusted Solutions Ltd. / LLC»</td>
+<td>Устойчиво у вторичек <strong>и в отчёте AV-Comparatives
+2020</strong>; <strong>vpnscorecard фиксирует расхождение</strong> с
+Terms-документом; первоисточник не найден</td>
+<td><a href="#fn182" class="footnote-ref" id="fnref182"
+role="doc-noteref"><sup>182</sup></a><a href="#fn183"
+class="footnote-ref" id="fnref183"
+role="doc-noteref"><sup>183</sup></a></td>
+</tr>
+<tr class="odd">
+<td><strong>AV-Comparatives 2020</strong></td>
+<td>🟢 <strong>Участие подтверждено:</strong> в таблице 35 продуктов —
+<em>«Trust.Zone VPN 1.1 — Trusted Solutions Ltd., Seychelles»</em></td>
+<td><a href="#fn184" class="footnote-ref" id="fnref184"
+role="doc-noteref"><sup>184</sup></a></td>
+</tr>
+<tr class="even">
+<td>Основан</td>
+<td><strong>2014</strong></td>
+<td><a href="#fn185" class="footnote-ref" id="fnref185"
+role="doc-noteref"><sup>185</sup></a><a href="#fn186"
+class="footnote-ref" id="fnref186"
+role="doc-noteref"><sup>186</sup></a></td>
+</tr>
+<tr class="odd">
+<td><strong>Warrant canary</strong></td>
+<td>🟢 <strong>Есть, PGP-подписан, обновляется ежедневно</strong>;
+<em>«No searches or seizures… No warrants have ever been served»</em>
+(актуально на 29.09.2026)</td>
+<td><a href="#fn187" class="footnote-ref" id="fnref187"
+role="doc-noteref"><sup>187</sup></a></td>
+</tr>
+<tr class="even">
+<td>Логи</td>
+<td><em>«does not monitor, collect or store logs of users’ VPN activity
+or traffic-related metadata… does not use third-party analytics»</em>;
+bandwidth — «Some»</td>
+<td><a href="#fn188" class="footnote-ref" id="fnref188"
+role="doc-noteref"><sup>188</sup></a><a href="#fn189"
+class="footnote-ref" id="fnref189"
+role="doc-noteref"><sup>189</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Возврат</td>
+<td><strong>10 дней</strong>, только по первой прямой покупке; лимит
+<strong>1 ГБ</strong> — в актуальном TOS отсутствует, подтверждается
+лишь старой версией</td>
+<td><a href="#fn190" class="footnote-ref" id="fnref190"
+role="doc-noteref"><sup>190</sup></a><a href="#fn191"
+class="footnote-ref" id="fnref191"
+role="doc-noteref"><sup>191</sup></a></td>
+</tr>
+<tr class="even">
+<td><strong>Аудит</strong></td>
+<td>🔴 <strong>Нет ни одного независимого.</strong> vpnscorecard:
+<strong>61/100, Transparency 0/100</strong></td>
+<td><a href="#fn192" class="footnote-ref" id="fnref192"
+role="doc-noteref"><sup>192</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Техпроблемы</td>
+<td>🔴 <strong>DNS-утечки (2023)</strong> — <em>«allows location leaks
+through DNS queries… even with DNS Leak Protection active»</em>; нет
+нативного Mac-клиента; dedicated IP делится между юзерами</td>
+<td><a href="#fn193" class="footnote-ref" id="fnref193"
+role="doc-noteref"><sup>193</sup></a><a href="#fn194"
+class="footnote-ref" id="fnref194"
+role="doc-noteref"><sup>194</sup></a></td>
+</tr>
+<tr class="even">
+<td><strong>Trustpilot</strong></td>
+<td>🟡 3.9/5 (24 отзыва); свежий негатив: <em>«constant connection
+dropouts… DNS handling concerns»</em></td>
+<td><a href="#fn195" class="footnote-ref" id="fnref195"
+role="doc-noteref"><sup>195</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Прочее</td>
+<td>«Собирает часть данных пользователей» (обобщённая характеристика
+«Вёрстки»)</td>
+<td><a href="#fn196" class="footnote-ref" id="fnref196"
+role="doc-noteref"><sup>196</sup></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="meduzavpn-иллюстрация-доменов-двойников">8.3. MeduzaVPN
+(иллюстрация «доменов-двойников»)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Факт</th>
+<th>Источник</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Домен</td>
+<td><code>meduzavpn.com</code> (+ зеркало
+<code>meduzacore.com</code>)</td>
+<td><a href="#fn197" class="footnote-ref" id="fnref197"
+role="doc-noteref"><sup>197</sup></a></td>
+</tr>
+<tr class="even">
+<td>Оператор</td>
+<td><strong>IPFB LLC</strong>, 1207 Delaware Ave #1262, Wilmington, DE,
+США</td>
+<td><a href="#fn198" class="footnote-ref" id="fnref198"
+role="doc-noteref"><sup>198</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Владелец-структура</td>
+<td>Холдинг <strong>«Anton Pankratov’s Companies»</strong> (10+
+проектов, 40+ стран, выручка $2,5 млн за 2024; цель к 2031 — 1M+
+клиентов); связь именно с редакцией «Медузы» — <strong>не
+подтверждена</strong></td>
+<td><a href="#fn199" class="footnote-ref" id="fnref199"
+role="doc-noteref"><sup>199</sup></a></td>
+</tr>
+<tr class="even">
+<td>Заявлено</td>
+<td>«официальный» сервис; персональный VPS; 0 логов «на уровне
+архитектуры»; <strong>60+ локаций, 10+ протоколов</strong> (WireGuard,
+OpenVPN, VLESS, Xray, Shadowsocks, Hysteria), 10+ устройств; от
+<strong>$4.58/мес</strong>; возврат <strong>15 дней</strong></td>
+<td><a href="#fn200" class="footnote-ref" id="fnref200"
+role="doc-noteref"><sup>200</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Связь с редакцией «Медузы»</td>
+<td>⚠️ <strong>Не подтверждена.</strong> Редакция публикует ad-policy,
+но прямого указания на владение сервисом нет</td>
+<td><a href="#fn201" class="footnote-ref" id="fnref201"
+role="doc-noteref"><sup>201</sup></a><a href="#fn202"
+class="footnote-ref" id="fnref202"
+role="doc-noteref"><sup>202</sup></a></td>
+</tr>
+<tr class="even">
+<td>Соседние домены</td>
+<td><code>medusanet.org</code> («Medusa VPN»), <code>mediavpn.net</code>
+(«Media VPN») — <strong>иные владельцы</strong>;
+<code>meduzacore.com</code> — тот же оператор;
+<strong><code>meduzafast.space</code></strong> — «семейный»
+WireGuard-доступ <strong>без аккаунта</strong> (профиль выдаёт владелец
+сети, иной оператор)</td>
+<td><a href="#fn203" class="footnote-ref" id="fnref203"
+role="doc-noteref"><sup>203</sup></a><a href="#fn204"
+class="footnote-ref" id="fnref204"
+role="doc-noteref"><sup>204</sup></a></td>
+</tr>
+<tr class="odd">
+<td>Вердикт</td>
+<td>⚠️ <strong>Не использовать вслепую.</strong> Классический кейс
+подмены бренда — сверять домен по первоисточнику</td>
+<td><a href="#fn205" class="footnote-ref" id="fnref205"
+role="doc-noteref"><sup>205</sup></a><a href="#fn206"
+class="footnote-ref" id="fnref206"
+role="doc-noteref"><sup>206</sup></a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="что-осталось-неподтверждённым-честно-помечаем">9. Что осталось
+неподтверждённым (честно помечаем)</h2>
+<p><strong>Закрыто в этой редакции:</strong></p>
+<ul>
+<li>✅ <strong>Kape / «скрытая монополия»</strong> — факты подтверждены
+независимыми ownership-картами 2026 (<code>vpncomparison.org</code>,
+<code>vpntesting.com</code>, <code>cleanvpns.com</code>,
+<code>thevpnmatrix.com</code>, <code>frankvpn.com</code>)<a
+href="#fn207" class="footnote-ref" id="fnref207"
+role="doc-noteref"><sup>207</sup></a><a href="#fn208"
+class="footnote-ref" id="fnref208"
+role="doc-noteref"><sup>208</sup></a><a href="#fn209"
+class="footnote-ref" id="fnref209"
+role="doc-noteref"><sup>209</sup></a><a href="#fn210"
+class="footnote-ref" id="fnref210"
+role="doc-noteref"><sup>210</sup></a><a href="#fn211"
+class="footnote-ref" id="fnref211"
+role="doc-noteref"><sup>211</sup></a>. Исходный URL расследования VPNpro
+сейчас отдаёт 403 — сайт считается дремлющим<a href="#fn212"
+class="footnote-ref" id="fnref212"
+role="doc-noteref"><sup>212</sup></a>.</li>
+<li>✅ <strong>Конфликт PCMag</strong> — подтверждён: Ziff Davis владеет
+и PCMag, и брендами IPVanish/StrongVPN<a href="#fn213"
+class="footnote-ref" id="fnref213"
+role="doc-noteref"><sup>213</sup></a>.</li>
+<li>✅ <strong>Новый факт:</strong> <strong>Comparitech, ProPrivacy и
+BestVPN.com принадлежат Aura/Pango</strong><a href="#fn214"
+class="footnote-ref" id="fnref214" role="doc-noteref"><sup>214</sup></a>
+— ранее фиксировали только vpnranks/bestvpnservice.</li>
+<li>✅ <strong>Материал «Медузы» по аффилиатности</strong> — найден: это
+её открытая <strong>ad-policy</strong> (16.03.2026)<a href="#fn215"
+class="footnote-ref" id="fnref215"
+role="doc-noteref"><sup>215</sup></a>.</li>
+<li>✅ <strong>Полные тексты</strong> Habr 1033400, Habr 1056290, gist
+BoberSdoh, «Вёрстка», отчёт OONI (EN/RU), исследование RKS по бесплатным
+VPN — дочитаны, ключевые факты внесены.</li>
+<li>✅ <strong>Trust.Zone в AV-Comparatives 2020</strong> — подтверждено
+таблицей отчёта (35 продуктов): <em>«Trust.Zone VPN 1.1 — Trusted
+Solutions Ltd., Seychelles»</em><a href="#fn216" class="footnote-ref"
+id="fnref216" role="doc-noteref"><sup>216</sup></a>.</li>
+<li>✅ <strong>Trust.Zone по актуальному TOS</strong> — оператор
+<strong>Internet Privacy Ltd</strong> (Сейшелы), дистрибьютор
+<strong>Tersys Group OÜ</strong> (Таллин), governing law — Сейшелы, FREE
+TRIAL не автопродляется, возврат <strong>10 дней</strong> только по
+первой прямой покупке<a href="#fn217" class="footnote-ref" id="fnref217"
+role="doc-noteref"><sup>217</sup></a>.</li>
+<li>✅ <strong>Хозяин MeduzaVPN</strong> — холдинг <strong>Anton
+Pankratov’s Companies</strong><a href="#fn218" class="footnote-ref"
+id="fnref218" role="doc-noteref"><sup>218</sup></a>; оператор
+<strong>IPFB LLC</strong> (Wilmington, DE)<a href="#fn219"
+class="footnote-ref" id="fnref219"
+role="doc-noteref"><sup>219</sup></a>.</li>
+<li>✅ <strong>Пятый домен-двойник</strong> —
+<code>meduzafast.space</code> (семейный WireGuard-доступ без аккаунта,
+не связан с IPFB LLC)<a href="#fn220" class="footnote-ref" id="fnref220"
+role="doc-noteref"><sup>220</sup></a>.</li>
+<li>⚠️ <strong>Red Shield:</strong> намерение судиться с РКН и дойти до
+ЕСПЧ зафиксировано первоисточниками<a href="#fn221" class="footnote-ref"
+id="fnref221" role="doc-noteref"><sup>221</sup></a>; <strong>факт подачи
+иска — нет</strong>.</li>
+</ul>
+<p><strong>Остаётся неподтверждённым:</strong></p>
+<ul>
+<li><strong>Регистрационные данные и фактический владелец
+Trust.Zone</strong> — по первоисточникам не найдены. Вторички устойчиво
+называют <strong>Trusted Solutions Ltd.</strong> (Mahé, Сейшелы), тогда
+как актуальный TOS — <strong>Internet Privacy Ltd</strong>; расхождение
+не разрешено (vpnscorecard берёт сторону Terms)<a href="#fn222"
+class="footnote-ref" id="fnref222"
+role="doc-noteref"><sup>222</sup></a><a href="#fn223"
+class="footnote-ref" id="fnref223"
+role="doc-noteref"><sup>223</sup></a><a href="#fn224"
+class="footnote-ref" id="fnref224"
+role="doc-noteref"><sup>224</sup></a>.</li>
+<li><strong>Конкретные кейсы накрутки Trustpilot с URL</strong> — не
+найдены; вся негативная фактура идёт из живых отзывов<a href="#fn225"
+class="footnote-ref" id="fnref225"
+role="doc-noteref"><sup>225</sup></a><a href="#fn226"
+class="footnote-ref" id="fnref226"
+role="doc-noteref"><sup>226</sup></a>.</li>
+<li><strong>Прайс-лист «плата за место»</strong> в рейтингах — прямых
+доказательств нет; только косвенные признаки: метка «Промо»<a
+href="#fn227" class="footnote-ref" id="fnref227"
+role="doc-noteref"><sup>227</sup></a>, форма «Apply to add your VPN»<a
+href="#fn228" class="footnote-ref" id="fnref228"
+role="doc-noteref"><sup>228</sup></a>.</li>
+<li><strong>Связь MeduzaVPN (IPFB LLC) с редакцией «Медузы»</strong> —
+не подтверждена: оператор и холдинг идентифицированы<a href="#fn229"
+class="footnote-ref" id="fnref229"
+role="doc-noteref"><sup>229</sup></a><a href="#fn230"
+class="footnote-ref" id="fnref230"
+role="doc-noteref"><sup>230</sup></a>, но прямого указания на
+принадлежность редакции нет<a href="#fn231" class="footnote-ref"
+id="fnref231" role="doc-noteref"><sup>231</sup></a>.</li>
+<li><strong>Переход Red Shield с <code>changeok.io</code> / эстонского
+юрлица</strong> — первоисточниками не подтверждается; текущий
+<code>changeok.io</code> — независимый обзорник<a href="#fn232"
+class="footnote-ref" id="fnref232"
+role="doc-noteref"><sup>232</sup></a>.</li>
+<li><strong>Документ о подаче иска Red Shield к РКН/ЕСПЧ</strong> — не
+найден (зафиксировано только намерение)<a href="#fn233"
+class="footnote-ref" id="fnref233"
+role="doc-noteref"><sup>233</sup></a>.</li>
+</ul>
+<hr />
+<h2 id="итоговые-правила-для-инструкции">10. Итоговые правила для
+инструкции</h2>
+<ol type="1">
+<li><strong>Ссылаться на данные, не на «топы».</strong> Из источников
+допустимы: OONI<a href="#fn234" class="footnote-ref" id="fnref234"
+role="doc-noteref"><sup>234</sup></a>, Privacy Guides<a href="#fn235"
+class="footnote-ref" id="fnref235"
+role="doc-noteref"><sup>235</sup></a>, vpnscorecard<a href="#fn236"
+class="footnote-ref" id="fnref236"
+role="doc-noteref"><sup>236</sup></a>, changeok.io<a href="#fn237"
+class="footnote-ref" id="fnref237"
+role="doc-noteref"><sup>237</sup></a>. Рейтинги vpnlove.org / vpnlove.me
+/ semnasem — только с пометкой «аффилиатный/ассоциативный».</li>
+<li><strong>Проверять владельца обзорника, а не только сервиса.</strong>
+Один и тот же холдинг может владеть и рейтингом, и VPN (Aura/Pango →
+Comparitech/ProPrivacy; Kape → vpnMentor/WizCase; Ziff Davis → PCMag)<a
+href="#fn238" class="footnote-ref" id="fnref238"
+role="doc-noteref"><sup>238</sup></a><a href="#fn239"
+class="footnote-ref" id="fnref239"
+role="doc-noteref"><sup>239</sup></a>.</li>
+<li><strong>Проверять юрисдикцию и юрлицо</strong> по разделу
+Terms/Privacy (первоисточник), а не по обзорам.</li>
+<li><strong>Требовать аудит + warrant canary + bug-bounty.</strong>
+Отсутствие аудита — не приговор, но это снижает уровень доверия (Red
+Shield, Trust.Zone — оба без аудита)<a href="#fn240"
+class="footnote-ref" id="fnref240"
+role="doc-noteref"><sup>240</sup></a><a href="#fn241"
+class="footnote-ref" id="fnref241"
+role="doc-noteref"><sup>241</sup></a>.</li>
+<li><strong>Для России выбирать AmneziaWG / VLESS+Reality /
+Hysteria2</strong>, избегать OpenVPN / «чистого» WireGuard / IKEv2 /
+Shadowsocks<a href="#fn242" class="footnote-ref" id="fnref242"
+role="doc-noteref"><sup>242</sup></a><a href="#fn243"
+class="footnote-ref" id="fnref243"
+role="doc-noteref"><sup>243</sup></a>.</li>
+<li><strong>Не считать клиент «крепостью»:</strong> коммерческая
+подписка может сливать реальный IP через серверную маршрутизацию<a
+href="#fn244" class="footnote-ref" id="fnref244"
+role="doc-noteref"><sup>244</sup></a>; детекция VPN — во всех
+топ-приложениях<a href="#fn245" class="footnote-ref" id="fnref245"
+role="doc-noteref"><sup>245</sup></a>. Предпочтительно: <strong>VPN на
+роутере</strong> + Work Profile<a href="#fn246" class="footnote-ref"
+id="fnref246" role="doc-noteref"><sup>246</sup></a>.</li>
+<li><strong>Не верить «запатентованным протоколам»</strong> без
+публичного кода и патентов<a href="#fn247" class="footnote-ref"
+id="fnref247" role="doc-noteref"><sup>247</sup></a>.</li>
+<li><strong>Сверять домен по первоисточнику.</strong> Брендовый поиск
+«Meduza VPN» / «VPN Check» ведёт на разные сайты с разными владельцами<a
+href="#fn248" class="footnote-ref" id="fnref248"
+role="doc-noteref"><sup>248</sup></a><a href="#fn249"
+class="footnote-ref" id="fnref249"
+role="doc-noteref"><sup>249</sup></a><a href="#fn250"
+class="footnote-ref" id="fnref250"
+role="doc-noteref"><sup>250</sup></a>.</li>
+<li><strong>Проверять дату цитаты.</strong> Часть «независимых»
+обзорников уже мертва или поглощена (RestorePrivacy → CyberInsider;
+BestVPN.com → ProPrivacy)<a href="#fn251" class="footnote-ref"
+id="fnref251" role="doc-noteref"><sup>251</sup></a>.</li>
+</ol>
+<hr />
+<h2 id="источники">Источники</h2>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB LLC,
+Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN» —
+https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN, но
+не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>AV-Comparatives VPN Report 2020 —
+https://av-comparatives.org/tests/vpn-report-2020-35-services<a
+href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref8"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref9"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>«Anton Pankratov’s Companies» —
+экосистема проектов, включая MeduzaVPN —
+https://antonpankratov.com/holding/meduzavpn<a href="#fnref10"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref11"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>Цитата В. Здольникова о суде с
+Роскомнадзором и ЕСПЧ (15.09.2021): TV Rain —
+https://tvrain.tv/news/v_rossii_nachali_blokirovat_vpn_servis_red_shield_ego_sozdateli_poobeschali_podat_v_sud_na_roskomnadzor-537934/
+; Радио Свобода —
+https://www.svoboda.org/a/v-rossii-nachali-blokirovatj-vpn-servis-red-shield/31462088.html<a
+href="#fnref12" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref13"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>Проекты Роскомсвободы —
+https://roskomsvoboda.org/ru/projects/<a href="#fnref14"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>VPN Love (рейтинг RKS) —
+https://vpnlove.org/<a href="#fnref15" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>VPN Love (рейтинг RKS) —
+https://vpnlove.org/<a href="#fnref16" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>RKS Global, «Проверка бесплатных
+VPN: кому уходят данные» (февраль 2026) —
+https://rks.global/ru/research/freevpns<a href="#fnref17"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>VPN Love, методология (AccessDenied)
+— https://vpnlove.org/methodology/ ; /about/ —
+https://vpnlove.org/about/<a href="#fnref18" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>VPN Love (коммерческий обзорник) —
+https://vpnlove.me/<a href="#fnref19" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>VPN Guild — https://vpnguild.org/<a
+href="#fnref20" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref21" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref22" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref23" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn24" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref24" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn25" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref25" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn26" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref26" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn27" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref27"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref28"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref29"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30" role="doc-endnote"><p>ChangeOK (независимый обзорник) —
+https://changeok.io/<a href="#fnref30" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn31" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref31" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn32" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref32" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn33" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref33"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref34"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref35"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref36" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn37" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref37" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn38" role="doc-endnote"><p>«Семь на семь», ТОП-3 VPN от Л.
+Юлдашева — https://semnasem.org/articles/2026/05/29/top-3-vpn<a
+href="#fnref38" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn39" role="doc-endnote"><p>«Семь на семь», ТОП-3 VPN от Л.
+Юлдашева — https://semnasem.org/articles/2026/05/29/top-3-vpn<a
+href="#fnref39" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn40" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref40" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn41" role="doc-endnote"><p>Habr 742890 «Мифы о VPN» —
+https://habr.com/ru/articles/742890/<a href="#fnref41"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn42" role="doc-endnote"><p>Habr 1056290 «Как коммерческие
+VLESS-подписки могут “сливать” ваш IP» —
+https://habr.com/ru/articles/1056290/<a href="#fnref42"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn43" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref43" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn44" role="doc-endnote"><p>Habr 768698 «Скрытая монополия
+VPN-рынка» (компания Xeovo) —
+https://habr.com/ru/companies/xeovo/articles/768698/<a href="#fnref44"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn45" role="doc-endnote"><p>Habr 1077900 «Как Durev VPN крадут
+статьи исследователей» — https://habr.com/ru/articles/1077900/<a
+href="#fnref45" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn46" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref46"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn47" role="doc-endnote"><p>VPN Love (коммерческий обзорник) —
+https://vpnlove.me/<a href="#fnref47" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn48" role="doc-endnote"><p>«Семь на семь», ТОП-3 VPN от Л.
+Юлдашева — https://semnasem.org/articles/2026/05/29/top-3-vpn<a
+href="#fnref48" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn49" role="doc-endnote"><p>VPN Love (рейтинг RKS) —
+https://vpnlove.org/<a href="#fnref49" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn50" role="doc-endnote"><p>VPN Love (рейтинг RKS) —
+https://vpnlove.org/<a href="#fnref50" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn51" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref51"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn52" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref52"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn53" role="doc-endnote"><p>CleanVPNs, «Who Owns Your VPN? Kape,
+Ziff Davis &amp; the Sites They Own» (20.07.2026) —
+https://cleanvpns.com/guides/who-owns-your-vpn<a href="#fnref53"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn54" role="doc-endnote"><p>VPN Love, методология (AccessDenied)
+— https://vpnlove.org/methodology/ ; /about/ —
+https://vpnlove.org/about/<a href="#fnref54" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn55" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref55"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn56" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref56"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn57" role="doc-endnote"><p>Habr 742890 «Мифы о VPN» —
+https://habr.com/ru/articles/742890/<a href="#fnref57"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn58" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref58" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn59" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN»
+— https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref59"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn60" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref60"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn61" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref61"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn62" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref62" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn63" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref63" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn64" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref64" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn65" role="doc-endnote"><p>Trust.Zone, Warrant Canary —
+https://trust.zone/canary (pubkey:
+https://trust.zone/canary_pubkey.txt)<a href="#fnref65"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn66" role="doc-endnote"><p>Red Shield VPN, Bug Bounty —
+https://redshieldvpn.xyz/en/help/description/bb<a href="#fnref66"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn67" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref67" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn68" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref68"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn69" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref69"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn70" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref70"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn71" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref71" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn72" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref72"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn73" role="doc-endnote"><p>RKS Global, «Проверка бесплатных
+VPN: кому уходят данные» (февраль 2026) —
+https://rks.global/ru/research/freevpns<a href="#fnref73"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn74" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref74" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn75" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref75"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn76" role="doc-endnote"><p>Проекты Роскомсвободы —
+https://roskomsvoboda.org/ru/projects/<a href="#fnref76"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn77" role="doc-endnote"><p>VPN Love (рейтинг RKS) —
+https://vpnlove.org/<a href="#fnref77" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn78" role="doc-endnote"><p>VPN Love, методология (AccessDenied)
+— https://vpnlove.org/methodology/ ; /about/ —
+https://vpnlove.org/about/<a href="#fnref78" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn79" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref79" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn80" role="doc-endnote"><p>VPN Love (коммерческий обзорник) —
+https://vpnlove.me/<a href="#fnref80" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn81" role="doc-endnote"><p>VPN Guild — https://vpnguild.org/<a
+href="#fnref81" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn82" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref82" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn83" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref83" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn84" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref84" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn85" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref85" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn86" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref86" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn87" role="doc-endnote"><p>«Семь на семь», ТОП-3 VPN от Л.
+Юлдашева — https://semnasem.org/articles/2026/05/29/top-3-vpn<a
+href="#fnref87" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn88" role="doc-endnote"><p>«Семь на семь», ТОП-3 VPN от Л.
+Юлдашева — https://semnasem.org/articles/2026/05/29/top-3-vpn<a
+href="#fnref88" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn89" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref89" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn90" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref90" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn91" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref91" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn92" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref92" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn93" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref93" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn94" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref94" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn95" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref95" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn96" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref96" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn97" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref97" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn98" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref98" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn99" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref99" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn100" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref100" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn101" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref101" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn102" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref102" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn103" role="doc-endnote"><p>RKS Global, «Проверка бесплатных
+VPN: кому уходят данные» (февраль 2026) —
+https://rks.global/ru/research/freevpns<a href="#fnref103"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn104" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref104" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn105" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN»
+— https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref105"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn106" role="doc-endnote"><p>Habr 768698 «Скрытая монополия
+VPN-рынка» (компания Xeovo) —
+https://habr.com/ru/companies/xeovo/articles/768698/<a href="#fnref106"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn107" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref107"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn108" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref108"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn109" role="doc-endnote"><p>CleanVPNs, «Who Owns Your VPN?
+Kape, Ziff Davis &amp; the Sites They Own» (20.07.2026) —
+https://cleanvpns.com/guides/who-owns-your-vpn<a href="#fnref109"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn110" role="doc-endnote"><p>The VPN Matrix, «Who Owns Your VPN?
+The 2026 Ownership Map» (16.06.2026) —
+https://thevpnmatrix.com/blog/who-owns-your-vpn<a href="#fnref110"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn111" role="doc-endnote"><p>FrankVPN, «Who Owns Your VPN? The
+2026 Ownership &amp; Jurisdiction Map» (03.07.2026) —
+https://frankvpn.com/vpn-ownership<a href="#fnref111"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn112" role="doc-endnote"><p>Habr 768698 «Скрытая монополия
+VPN-рынка» (компания Xeovo) —
+https://habr.com/ru/companies/xeovo/articles/768698/<a href="#fnref112"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn113" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref113"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn114" role="doc-endnote"><p>CleanVPNs, «Who Owns Your VPN?
+Kape, Ziff Davis &amp; the Sites They Own» (20.07.2026) —
+https://cleanvpns.com/guides/who-owns-your-vpn<a href="#fnref114"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn115" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref115"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn116" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref116"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn117" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref117"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn118" role="doc-endnote"><p>Habr 768698 «Скрытая монополия
+VPN-рынка» (компания Xeovo) —
+https://habr.com/ru/companies/xeovo/articles/768698/<a href="#fnref118"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn119" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref119"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn120" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref120"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn121" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref121"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn122" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref122"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn123" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref123"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn124" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref124"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn125" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref125"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn126" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref126"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn127" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref127"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn128" role="doc-endnote"><p>Habr 768698 «Скрытая монополия
+VPN-рынка» (компания Xeovo) —
+https://habr.com/ru/companies/xeovo/articles/768698/<a href="#fnref128"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn129" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref129"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn130" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref130" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn131" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref131" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn132" role="doc-endnote"><p>DPI Detector —
+https://dpidetector.org/<a href="#fnref132" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn133" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref133" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn134" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref134" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn135" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref135" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn136" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref136" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn137" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref137" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn138" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref138" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn139" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref139" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn140" role="doc-endnote"><p>Gist BoberSdoh, обзор 10 VPN 2026
+(полный текст + комментарии) —
+https://gist.github.com/BoberSdoh/ec67b2175d1f9cecaf6ad24a5278084e<a
+href="#fnref140" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn141" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref141" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn142" role="doc-endnote"><p>Habr 1056290 «Как коммерческие
+VLESS-подписки могут “сливать” ваш IP» —
+https://habr.com/ru/articles/1056290/<a href="#fnref142"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn143" role="doc-endnote"><p>Habr 1056290 «Как коммерческие
+VLESS-подписки могут “сливать” ваш IP» —
+https://habr.com/ru/articles/1056290/<a href="#fnref143"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn144" role="doc-endnote"><p>Habr 1056290 «Как коммерческие
+VLESS-подписки могут “сливать” ваш IP» —
+https://habr.com/ru/articles/1056290/<a href="#fnref144"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn145" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref145" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn146" role="doc-endnote"><p>OONI, «Хроники цензуры…» (RU) —
+https://ooni.org/ru/post/2024-russia-report<a href="#fnref146"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn147" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref147" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn148" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref148" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn149" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref149" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn150" role="doc-endnote"><p>Censored Planet, TSPU —
+https://censoredplanet.org/tspu<a href="#fnref150" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn151" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref151" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn152" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref152" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn153" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref153" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn154" role="doc-endnote"><p>RKS Global, «Детекция VPN
+российскими приложениями» (обн. 16.04.2026) —
+https://rks.global/ru/research/vpn-detection<a href="#fnref154"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn155" role="doc-endnote"><p>RKS Global, «Детекция VPN
+российскими приложениями» (обн. 16.04.2026) —
+https://rks.global/ru/research/vpn-detection<a href="#fnref155"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn156" role="doc-endnote"><p>RKS Global, «Детекция VPN
+российскими приложениями» (обн. 16.04.2026) —
+https://rks.global/ru/research/vpn-detection<a href="#fnref156"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn157" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref157" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn158" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref158" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn159" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref159" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn160" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref160" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn161" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref161" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn162" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref162" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn163" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref163" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn164" role="doc-endnote"><p>Red Shield VPN, Privacy Policy —
+https://redshieldvpn.com/pp<a href="#fnref164" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn165" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref165" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn166" role="doc-endnote"><p>DW, блокировка Red Shield —
+https://www.dw.com/ru/roskomnadzor-nachal-blokirovat-servis-red-shield-vpn/a-59195092<a
+href="#fnref166" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn167" role="doc-endnote"><p>Meduza, блокировка Red Shield —
+https://meduza.io/news/2021/09/15/v-rossii-nachali-blokirovat-servis-red-shield-vpn-s-pomoschyu-oborudovaniya-dlya-izolyatsii-runeta<a
+href="#fnref167" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn168" role="doc-endnote"><p>Red Shield VPN, Terms of Service —
+https://redshieldvpn.com/tos<a href="#fnref168" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn169" role="doc-endnote"><p>Red Shield VPN, Privacy Policy —
+https://redshieldvpn.com/pp<a href="#fnref169" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn170" role="doc-endnote"><p>Red Shield VPN, Terms of Service —
+https://redshieldvpn.com/tos<a href="#fnref170" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn171" role="doc-endnote"><p>TechRadar, Red Shield VPN review —
+https://www.techradar.com/reviews/red-shield-vpn<a href="#fnref171"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn172" role="doc-endnote"><p>Red Shield VPN, Bug Bounty —
+https://redshieldvpn.xyz/en/help/description/bb<a href="#fnref172"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn173" role="doc-endnote"><p>Red Shield VPN, Terms of Service —
+https://redshieldvpn.com/tos<a href="#fnref173" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn174" role="doc-endnote"><p>Trustpilot, Red Shield VPN —
+https://www.trustpilot.com/review/redshieldvpn.com<a href="#fnref174"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn175" role="doc-endnote"><p>App Store, Red Shield VPN —
+https://apps.apple.com/us/app/red-shield-vpn/id1476245357<a
+href="#fnref175" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn176" role="doc-endnote"><p>Google Play, Red Shield VPN —
+https://play.google.com/store/apps/details?id=com.redshieldvpn.app<a
+href="#fnref176" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn177" role="doc-endnote"><p>DW, блокировка Red Shield —
+https://www.dw.com/ru/roskomnadzor-nachal-blokirovat-servis-red-shield-vpn/a-59195092<a
+href="#fnref177" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn178" role="doc-endnote"><p>Meduza, блокировка Red Shield —
+https://meduza.io/news/2021/09/15/v-rossii-nachali-blokirovat-servis-red-shield-vpn-s-pomoschyu-oborudovaniya-dlya-izolyatsii-runeta<a
+href="#fnref178" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn179" role="doc-endnote"><p>Цитата В. Здольникова о суде с
+Роскомнадзором и ЕСПЧ (15.09.2021): TV Rain —
+https://tvrain.tv/news/v_rossii_nachali_blokirovat_vpn_servis_red_shield_ego_sozdateli_poobeschali_podat_v_sud_na_roskomnadzor-537934/
+; Радио Свобода —
+https://www.svoboda.org/a/v-rossii-nachali-blokirovatj-vpn-servis-red-shield/31462088.html<a
+href="#fnref179" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn180" role="doc-endnote"><p>Trustpilot, Red Shield VPN —
+https://www.trustpilot.com/review/redshieldvpn.com<a href="#fnref180"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn181" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref181"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn182" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref182"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn183" role="doc-endnote"><p>AV-Comparatives VPN Report 2020 —
+https://av-comparatives.org/tests/vpn-report-2020-35-services<a
+href="#fnref183" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn184" role="doc-endnote"><p>AV-Comparatives VPN Report 2020 —
+https://av-comparatives.org/tests/vpn-report-2020-35-services<a
+href="#fnref184" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn185" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref185"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn186" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref186" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn187" role="doc-endnote"><p>Trust.Zone, Warrant Canary —
+https://trust.zone/canary (pubkey:
+https://trust.zone/canary_pubkey.txt)<a href="#fnref187"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn188" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref188"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn189" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref189"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn190" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref190"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn191" role="doc-endnote"><p>CyberInsider, Trust.Zone review —
+https://cyberinsider.com/vpn/reviews/trust-zone<a href="#fnref191"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn192" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref192"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn193" role="doc-endnote"><p>CoolTechZone, Trust.Zone
+(DNS-утечки) — https://cooltechzone.com/trust-zone<a href="#fnref193"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn194" role="doc-endnote"><p>CyberInsider, Trust.Zone review —
+https://cyberinsider.com/vpn/reviews/trust-zone<a href="#fnref194"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn195" role="doc-endnote"><p>Trustpilot, Trust.Zone —
+https://www.trustpilot.com/review/trust.zone<a href="#fnref195"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn196" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref196" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn197" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref197" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn198" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref198" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn199" role="doc-endnote"><p>«Anton Pankratov’s Companies» —
+экосистема проектов, включая MeduzaVPN —
+https://antonpankratov.com/holding/meduzavpn<a href="#fnref199"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn200" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref200" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn201" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref201" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn202" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref202" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn203" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN»
+— https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref203"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn204" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref204"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn205" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref205" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn206" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN»
+— https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref206"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn207" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref207"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn208" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref208"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn209" role="doc-endnote"><p>CleanVPNs, «Who Owns Your VPN?
+Kape, Ziff Davis &amp; the Sites They Own» (20.07.2026) —
+https://cleanvpns.com/guides/who-owns-your-vpn<a href="#fnref209"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn210" role="doc-endnote"><p>The VPN Matrix, «Who Owns Your VPN?
+The 2026 Ownership Map» (16.06.2026) —
+https://thevpnmatrix.com/blog/who-owns-your-vpn<a href="#fnref210"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn211" role="doc-endnote"><p>FrankVPN, «Who Owns Your VPN? The
+2026 Ownership &amp; Jurisdiction Map» (03.07.2026) —
+https://frankvpn.com/vpn-ownership<a href="#fnref211"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn212" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref212"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn213" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref213"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn214" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref214"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn215" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref215" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn216" role="doc-endnote"><p>AV-Comparatives VPN Report 2020 —
+https://av-comparatives.org/tests/vpn-report-2020-35-services<a
+href="#fnref216" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn217" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref217"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn218" role="doc-endnote"><p>«Anton Pankratov’s Companies» —
+экосистема проектов, включая MeduzaVPN —
+https://antonpankratov.com/holding/meduzavpn<a href="#fnref218"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn219" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref219" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn220" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref220"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn221" role="doc-endnote"><p>Цитата В. Здольникова о суде с
+Роскомнадзором и ЕСПЧ (15.09.2021): TV Rain —
+https://tvrain.tv/news/v_rossii_nachali_blokirovat_vpn_servis_red_shield_ego_sozdateli_poobeschali_podat_v_sud_na_roskomnadzor-537934/
+; Радио Свобода —
+https://www.svoboda.org/a/v-rossii-nachali-blokirovatj-vpn-servis-red-shield/31462088.html<a
+href="#fnref221" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn222" role="doc-endnote"><p>Trust.Zone, General Terms &amp;
+Conditions — https://trust.zone/terms<a href="#fnref222"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn223" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref223"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn224" role="doc-endnote"><p>AV-Comparatives VPN Report 2020 —
+https://av-comparatives.org/tests/vpn-report-2020-35-services<a
+href="#fnref224" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn225" role="doc-endnote"><p>Trustpilot, Red Shield VPN —
+https://www.trustpilot.com/review/redshieldvpn.com<a href="#fnref225"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn226" role="doc-endnote"><p>Trustpilot, Trust.Zone —
+https://www.trustpilot.com/review/trust.zone<a href="#fnref226"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn227" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref227" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn228" role="doc-endnote"><p>Trusted VPN Services by VPN Guild —
+https://trusted.vpnguild.org/<a href="#fnref228" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn229" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref229" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn230" role="doc-endnote"><p>«Anton Pankratov’s Companies» —
+экосистема проектов, включая MeduzaVPN —
+https://antonpankratov.com/holding/meduzavpn<a href="#fnref230"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn231" role="doc-endnote"><p>Meduza, «„Медуза“ рекламирует VPN,
+но не все. Как мы их выбираем?» (16.03.2026) —
+https://meduza.io/feature/2026/03/16/meduza-reklamiruet-vpn-no-ne-vse-kak-my-ih-vybiraem<a
+href="#fnref231" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn232" role="doc-endnote"><p>ChangeOK (независимый обзорник) —
+https://changeok.io/<a href="#fnref232" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn233" role="doc-endnote"><p>Цитата В. Здольникова о суде с
+Роскомнадзором и ЕСПЧ (15.09.2021): TV Rain —
+https://tvrain.tv/news/v_rossii_nachali_blokirovat_vpn_servis_red_shield_ego_sozdateli_poobeschali_podat_v_sud_na_roskomnadzor-537934/
+; Радио Свобода —
+https://www.svoboda.org/a/v-rossii-nachali-blokirovatj-vpn-servis-red-shield/31462088.html<a
+href="#fnref233" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn234" role="doc-endnote"><p>OONI + RKS Global, «Censorship
+Chronicles: The systematic suppression of independent media in Russia»
+(2024-12-09, EN) — https://ooni.org/post/2024-russia-report/<a
+href="#fnref234" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn235" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref235"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn236" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref236"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn237" role="doc-endnote"><p>ChangeOK (независимый обзорник) —
+https://changeok.io/<a href="#fnref237" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn238" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref238"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn239" role="doc-endnote"><p>VPNTesting, «Ziff Davis — Corporate
+Profile» (обн. 28.03.2026) —
+https://vpntesting.com/ownership/ziff-davis<a href="#fnref239"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn240" role="doc-endnote"><p>VPN Scorecard, Trust.Zone —
+https://vpnscorecard.com/vpn/trust-zone<a href="#fnref240"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn241" role="doc-endnote"><p>TechRadar, Red Shield VPN review —
+https://www.techradar.com/reviews/red-shield-vpn<a href="#fnref241"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn242" role="doc-endnote"><p>«Вёрстка», «Как выбрать безопасный
+VPN в 2025 году…» (полный текст) —
+https://verstka.media/kak-vybrat-bezopasnyj-vpn-v-2025-godu<a
+href="#fnref242" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn243" role="doc-endnote"><p>VPN Статус —
+https://vpnstatus.site/<a href="#fnref243" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn244" role="doc-endnote"><p>Habr 1056290 «Как коммерческие
+VLESS-подписки могут “сливать” ваш IP» —
+https://habr.com/ru/articles/1056290/<a href="#fnref244"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn245" role="doc-endnote"><p>RKS Global, «Детекция VPN
+российскими приложениями» (обн. 16.04.2026) —
+https://rks.global/ru/research/vpn-detection<a href="#fnref245"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn246" role="doc-endnote"><p>RKS Global, «Детекция VPN
+российскими приложениями» (обн. 16.04.2026) —
+https://rks.global/ru/research/vpn-detection<a href="#fnref246"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn247" role="doc-endnote"><p>Habr 1033400 «Не покупайте плохой
+VPN» (полный текст) — https://habr.com/ru/articles/1033400/<a
+href="#fnref247" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn248" role="doc-endnote"><p>MeduzaVPN (сервис, оператор IPFB
+LLC, Wilmington, DE) — https://meduzavpn.com/ru ; о сервисе —
+https://meduzavpn.com/ru/about ; зеркало —
+https://meduzacore.com/contacts<a href="#fnref248" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn249" role="doc-endnote"><p>Домены-двойники «Медуза/Medusa VPN»
+— https://medusanet.org/ru ; https://mediavpn.net/<a href="#fnref249"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn250" role="doc-endnote"><p>MeduzaVPN-двойник
+<code>meduzafast.space</code> («семейный» WireGuard-доступ, профиль
+выдаёт владелец сети) — https://meduzafast.space<a href="#fnref250"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn251" role="doc-endnote"><p>VPN Comparison, «VPN Review Sites:
+Ownership &amp; Affiliate Conflicts (2026)» —
+https://vpncomparison.org/review-sites<a href="#fnref251"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
